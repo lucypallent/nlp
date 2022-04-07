@@ -5,6 +5,8 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import string
 import json
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 # import nltk
 # from nltk.corpus import stopwords
@@ -69,8 +71,6 @@ train['Headline'] = train['Headline'].apply(lambda x: ' '.join([word for word in
 test['articleBody'] = test['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 test['Headline'] = test['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 
-
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 TFIDF_VOCAB_SIZE = 5000 # lim_unigram
 
