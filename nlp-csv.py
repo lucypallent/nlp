@@ -137,4 +137,18 @@ tfidf_teh.columns = dictionary
 tfidf_teh = tfidf_teh.assign(Headline=test['Headline'].drop_duplicates().tolist())
 tfidf_teh.to_csv('nlp_csv/tfidf_test_head.csv', index=False)
 
+print('starting to add cos similarity')
+tfidf_train = train.merge(tfidf_tb, how='inner', on='articleBody')
+tfidf_train = tfidf_train.merge(tfidf_th, how='inner', on='Headline')
+tfidf_test = test.merge(tfidf_teb, how='inner', on='articleBody')
+tfidf_test = tfidf_test.merge(tfidf_teh, how='inner', on='Headline')
+
+tfidf_bo_cols = tfidf_test.columns.tolist()[3:5003] # same for both because based on same dictionary
+tfidf_he_cols = tfidf_test.columns.tolist()[5003:]
+
+tfidf_train['tfidf_cos'] = tfidf_train.apply(lambda row: scipy.spatial.distance.cosine(row[tfidf_bo_cols], row[tfidf_he_cols]), axis = 1)
+tfidf_test['tfidf_cos'] = tfidf_test.apply(lambda row: scipy.spatial.distance.cosine(row[tfidf_bo_cols], row[tfidf_he_cols]), axis = 1)
+
+tfidf_train.to_csv('nlp_csv/tfidf_train.csv', index=False)
+tfidf_test.to_csv('nlp_csv/tfidf_test.csv', index=False)
 print('WORKS!')
