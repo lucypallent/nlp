@@ -138,10 +138,17 @@ tfidf_teh = tfidf_teh.assign(Headline=test['Headline'].drop_duplicates().tolist(
 tfidf_teh.to_csv('nlp_csv/tfidf_test_head.csv', index=False)
 
 print('starting to add cos similarity')
-tfidf_train = train.merge(tfidf_tb, how='inner', on='articleBody')
-tfidf_train = tfidf_train.merge(tfidf_th, how='inner', on='Headline')
-tfidf_test = test.merge(tfidf_teb, how='inner', on='articleBody')
-tfidf_test = tfidf_test.merge(tfidf_teh, how='inner', on='Headline')
+# read in the csv files - avoids sparse error and alligns with
+# Google Colab version
+tfidf_train_body = pd.read_csv('/content/drive/MyDrive/nlp_csv/tfidf_train_body.csv')
+tfidf_train_head = pd.read_csv('/content/drive/MyDrive/nlp_csv/tfidf_train_head.csv')
+tfidf_test_body = pd.read_csv('/content/drive/MyDrive/nlp_csv/tfidf_test_body.csv')
+tfidf_test_head = pd.read_csv('/content/drive/MyDrive/nlp_csv/tfidf_test_head.csv')
+
+tfidf_train = train.merge(tfidf_train_body, how='inner', on='articleBody')
+tfidf_train = tfidf_train.merge(tfidf_train_head, how='inner', on='Headline')
+tfidf_test = test.merge(tfidf_test_body, how='inner', on='articleBody')
+tfidf_test = tfidf_test.merge(tfidf_test_head, how='inner', on='Headline')
 
 tfidf_bo_cols = tfidf_test.columns.tolist()[3:5003] # same for both because based on same dictionary
 tfidf_he_cols = tfidf_test.columns.tolist()[5003:]
