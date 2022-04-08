@@ -380,7 +380,7 @@ model, optimizer, train_dataloader, eval_dataloader, full_dataloader, mask_fille
 # https://stackoverflow.com/questions/58636587/how-to-use-bert-for-long-text-classification
 # other options if performance isn't good
 
-#### how to make sure input is truncated to 512
+#### how to make sure input is truncated to 512 https://stackoverflow.com/questions/71344409/huggingface-textclassifcation-pipeline-truncate-text-size
 # nlp= pipeline('sentiment-analysis',
 #                      model=AutoModelForSequenceClassification.from_pretrained(
 #                         "model",
