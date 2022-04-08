@@ -13,6 +13,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import random
 import torch
 
+import os
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 import neptune.new as neptune
 random.seed(42); torch.manual_seed(42); np.random.seed(42)
 
@@ -267,7 +270,7 @@ model, optimizer, train_dataloader, eval_dataloader = accelerator.prepare(
 
 from transformers import get_scheduler
 
-num_train_epochs = 2 # change to 200 or something
+num_train_epochs = 1 # change to 200 or something
 num_update_steps_per_epoch = len(train_dataloader)
 num_training_steps = num_train_epochs * num_update_steps_per_epoch
 
@@ -398,6 +401,8 @@ model, optimizer, train_dataloader, eval_dataloader, full_dataloader, mask_fille
 
 all_words['dbert_final'] = ''
 all_words['dbert_best'] = ''
+all_words.drop_duplicates(inplace=True)
+
 for step, batch in enumerate(full_dataloader):
     with torch.no_grad():
         title = accelerator.prepare(batch[0])
