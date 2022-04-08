@@ -7,6 +7,7 @@ import string
 import json
 from sklearn.feature_extraction.text import TfidfVectorizer
 import random
+import torch
 
 import neptune.new as neptune
 random.seed(42); torch.manual_seed(42); np.random.seed(42)
