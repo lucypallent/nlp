@@ -1,3 +1,5 @@
+# based on tutorial here: https://huggingface.co/course/chapter7/3?fw=pt#using-our-finetuned-model
+
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer#, CountVectorizer
@@ -165,6 +167,7 @@ def whole_word_masking_data_collator(features):
 
 train_size = len(lm_datasets)
 test_size = int(0.1 * train_size)
+train_size = train_size - test_size
 
 downsampled_dataset = lm_datasets.train_test_split(
     train_size=train_size, test_size=test_size, seed=42
