@@ -102,7 +102,7 @@ def tokenize_function(examples):
 
 # Use batched=True to activate fast multithreading!
 tokenized_datasets = tdidf.map(
-    tokenize_function, batched=True, remove_columns=['Headline', '__index_level_0__']
+    tokenize_function, batched=True, remove_columns=['Headline']
 )
 
 def group_texts(examples):
