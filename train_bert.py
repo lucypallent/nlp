@@ -1,4 +1,6 @@
 # based on tutorial here: https://huggingface.co/course/chapter7/3?fw=pt#using-our-finetuned-model
+# currently using this to login to huggingface_hub unsure if working though :/ https://huggingface.co/docs/hub/adding-a-library
+
 
 import pandas as pd
 import numpy as np
@@ -265,7 +267,7 @@ model, optimizer, train_dataloader, eval_dataloader = accelerator.prepare(
 
 from transformers import get_scheduler
 
-num_train_epochs = 3 # change to 200 or something
+num_train_epochs = 2 # change to 200 or something
 num_update_steps_per_epoch = len(train_dataloader)
 num_training_steps = num_train_epochs * num_update_steps_per_epoch
 
@@ -292,6 +294,9 @@ import torch
 import math
 
 progress_bar = tqdm(range(num_training_steps))
+
+best_perplexity = 1.0
+model_best = model
 
 for epoch in range(num_train_epochs):
     run["training/epoch"].log(epoch)
@@ -331,6 +336,12 @@ for epoch in range(num_train_epochs):
     print(f">>> Epoch {epoch}: Perplexity: {perplexity}")
     run["eval/perplexity"].log(perplexity)
 
+    if perplexity < best_perplexity:
+        model.save_pretrained('dbert_models/dbert-best')
+        model_best = model
+        best_perplexity = perplexity
+        run["eval/best/perplexity"].log(best_perplexity)
+        run["eval/best/epoch"].log(epoch)
 
     # Save and upload
     accelerator.wait_for_everyone()
@@ -348,24 +359,54 @@ full_dataloader = DataLoader(
 )
 
 # saving model
-model.save_pretrained('bert-model-test')
+# model.save_pretrained('bert-model-test')
+model.save_pretrained('dbert_models/dbert-final')
+
 
 mask_filler = pipeline(
     'feature-extraction', model=model, tokenizer=tokenizer, framework='pt', device=0
 )
 
-accelerator = Accelerator()
-model, optimizer, train_dataloader, eval_dataloader, full_dataloader, mask_filler = accelerator.prepare(
-    model, optimizer, train_dataloader, eval_dataloader, full_dataloader, mask_filler
+mask_filler_best = pipeline(
+    'feature-extraction', model=model_best, tokenizer=tokenizer, framework='pt', device=0
 )
 
-all_words['bert'] = ''
+accelerator = Accelerator()
+model, optimizer, train_dataloader, eval_dataloader, full_dataloader, mask_filler, mask_filler_best = accelerator.prepare(
+    model, optimizer, train_dataloader, eval_dataloader, full_dataloader, mask_filler, mask_filler_best
+)
+
+# will be truncatoing text to 512 tokens as proposed here:
+# https://stackoverflow.com/questions/58636587/how-to-use-bert-for-long-text-classification
+# other options if performance isn't good
+
+#### how to make sure input is truncated to 512
+# nlp= pipeline('sentiment-analysis',
+#                      model=AutoModelForSequenceClassification.from_pretrained(
+#                         "model",
+#                          return_dict=False),
+#                      tokenizer=AutoTokenizer.from_pretrained(
+#                          "model",
+#                          return_dict=False),
+#                      framework="pt", return_all_scores=False)
+#
+# output = nlp(article)
+#
+# # encoded_input = tokenizer(article, truncation=True, max_length=512)
+# # decoded_input = tokenizer.decode(encoded_input["input_ids"], skip_special_tokens = True)
+# # output = nlp(decoded_input)
+
+all_words['dbert_final'] = ''
+all_words['dbert_best'] = ''
 for step, batch in enumerate(full_dataloader):
     with torch.no_grad():
         title = accelerator.prepare(batch[0])
-        all_words.iloc[step, 1] = mask_filler(title)
+        encoded_title = tokenizer(title, truncation=True, max_length=512)
+        decoded_title = tokenizer.decode(encoded_title["input_ids"], skip_special_tokens = True)
+        all_words.iloc[step, 1] = mask_filler(decoded_title)
+        all_words.iloc[step, 2] = mask_filler_best(decoded_title)
 
-all_words.to_csv('nlp_csv/all_words.csv', index=False)
+all_words.to_csv('nlp_csv/all_words_distilbert.csv', index=False)
 
 # import pickle
 # file_name = "test.pkl"
