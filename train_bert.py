@@ -270,7 +270,7 @@ model, optimizer, train_dataloader, eval_dataloader = accelerator.prepare(
 
 from transformers import get_scheduler
 
-num_train_epochs = 1 # change to 200 or something
+num_train_epochs = 10 # change to 200 or something
 num_update_steps_per_epoch = len(train_dataloader)
 num_training_steps = num_train_epochs * num_update_steps_per_epoch
 
@@ -341,6 +341,8 @@ for epoch in range(num_train_epochs):
 
     if perplexity < best_perplexity:
         model.save_pretrained('dbert_models/dbert-best')
+        sv_pth = 'dbert_models/dbert-best_' + str(epoch) 
+        model.save_pretrained(sv_pth)
         model_best = model
         best_perplexity = perplexity
         run["eval/best/perplexity"].log(best_perplexity)
@@ -365,58 +367,59 @@ full_dataloader = DataLoader(
 # model.save_pretrained('bert-model-test')
 model.save_pretrained('dbert_models/dbert-final')
 
-
-mask_filler = pipeline(
-    'feature-extraction', model=model, tokenizer=tokenizer, framework='pt', device=0
-)
-
-mask_filler_best = pipeline(
-    'feature-extraction', model=model_best, tokenizer=tokenizer, framework='pt', device=0
-)
-
-accelerator = Accelerator()
-model, optimizer, train_dataloader, eval_dataloader, full_dataloader, mask_filler, mask_filler_best = accelerator.prepare(
-    model, optimizer, train_dataloader, eval_dataloader, full_dataloader, mask_filler, mask_filler_best
-)
-
-# will be truncatoing text to 512 tokens as proposed here:
-# https://stackoverflow.com/questions/58636587/how-to-use-bert-for-long-text-classification
-# other options if performance isn't good
-
-#### how to make sure input is truncated to 512 https://stackoverflow.com/questions/71344409/huggingface-textclassifcation-pipeline-truncate-text-size
-# nlp= pipeline('sentiment-analysis',
-#                      model=AutoModelForSequenceClassification.from_pretrained(
-#                         "model",
-#                          return_dict=False),
-#                      tokenizer=AutoTokenizer.from_pretrained(
-#                          "model",
-#                          return_dict=False),
-#                      framework="pt", return_all_scores=False)
+print('it works!!!!')
+######################### commented out below because i think here causes mem issues, will run with cpu seperately
+# mask_filler = pipeline(
+#     'feature-extraction', model=model, tokenizer=tokenizer, framework='pt', device=0
+# )
 #
-# output = nlp(article)
+# mask_filler_best = pipeline(
+#     'feature-extraction', model=model_best, tokenizer=tokenizer, framework='pt', device=0
+# )
 #
-# # encoded_input = tokenizer(article, truncation=True, max_length=512)
-# # decoded_input = tokenizer.decode(encoded_input["input_ids"], skip_special_tokens = True)
-# # output = nlp(decoded_input)
-
-all_words['dbert_final'] = ''
-all_words['dbert_best'] = ''
-all_words.drop_duplicates(inplace=True)
-
-for step, batch in enumerate(full_dataloader):
-    with torch.no_grad():
-        title = accelerator.prepare(batch[0])
-        encoded_title = tokenizer(title, truncation=True, max_length=512)
-        decoded_title = tokenizer.decode(encoded_title["input_ids"], skip_special_tokens = True)
-        all_words.iloc[step, 1] = mask_filler(decoded_title)
-        all_words.iloc[step, 2] = mask_filler_best(decoded_title)
-
-all_words.to_csv('nlp_csv/all_words_distilbert.csv', index=False)
-
-# import pickle
-# file_name = "test.pkl"
+# accelerator = Accelerator()
+# model, optimizer, train_dataloader, eval_dataloader, full_dataloader, mask_filler, mask_filler_best = accelerator.prepare(
+#     model, optimizer, train_dataloader, eval_dataloader, full_dataloader, mask_filler, mask_filler_best
+# )
 #
-# open_file = open(file_name, "wb")
-# pickle.dump(x, open_file)
-# open_file.close()
+# # will be truncatoing text to 512 tokens as proposed here:
+# # https://stackoverflow.com/questions/58636587/how-to-use-bert-for-long-text-classification
+# # other options if performance isn't good
+#
+# #### how to make sure input is truncated to 512 https://stackoverflow.com/questions/71344409/huggingface-textclassifcation-pipeline-truncate-text-size
+# # nlp= pipeline('sentiment-analysis',
+# #                      model=AutoModelForSequenceClassification.from_pretrained(
+# #                         "model",
+# #                          return_dict=False),
+# #                      tokenizer=AutoTokenizer.from_pretrained(
+# #                          "model",
+# #                          return_dict=False),
+# #                      framework="pt", return_all_scores=False)
 # #
+# # output = nlp(article)
+# #
+# # # encoded_input = tokenizer(article, truncation=True, max_length=512)
+# # # decoded_input = tokenizer.decode(encoded_input["input_ids"], skip_special_tokens = True)
+# # # output = nlp(decoded_input)
+#
+# all_words['dbert_final'] = ''
+# all_words['dbert_best'] = ''
+# all_words.drop_duplicates(inplace=True)
+#
+# for step, batch in enumerate(full_dataloader):
+#     with torch.no_grad():
+#         title = accelerator.prepare(batch[0])
+#         encoded_title = tokenizer(title, truncation=True, max_length=512)
+#         decoded_title = tokenizer.decode(encoded_title["input_ids"], skip_special_tokens = True)
+#         all_words.iloc[step, 1] = mask_filler(decoded_title)
+#         all_words.iloc[step, 2] = mask_filler_best(decoded_title)
+#
+# all_words.to_csv('nlp_csv/all_words_distilbert.csv', index=False)
+#
+# # import pickle
+# # file_name = "test.pkl"
+# #
+# # open_file = open(file_name, "wb")
+# # pickle.dump(x, open_file)
+# # open_file.close()
+# # #
