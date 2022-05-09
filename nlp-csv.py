@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import string
 import json
 from sklearn.feature_extraction.text import TfidfVectorizer
+import scipy
 from scipy import spatial
 
 
