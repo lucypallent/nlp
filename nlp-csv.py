@@ -164,14 +164,14 @@ print('tfidf_val_body')
 tfidf_val_body = tfidf_vectorizer.transform(val['articleBody'].drop_duplicates().values.astype('U'))
 tfidf_vab = pd.DataFrame.sparse.from_spmatrix(tfidf_val_body)
 tfidf_vab.columns = dictionary
-tfidf_vab = tfidf_teb.assign(articleBody=val['articleBody'].drop_duplicates().tolist())
+tfidf_vab = tfidf_vab.assign(articleBody=val['articleBody'].drop_duplicates().tolist())
 tfidf_vab.to_csv('nlp_csv2/tfidf_val_body.csv', index=False)
 
 print('tfidf_val_head')
 tfidf_val_head = tfidf_vectorizer.transform(val['Headline'].drop_duplicates().values.astype('U'))
 tfidf_vah = pd.DataFrame.sparse.from_spmatrix(tfidf_val_head)
 tfidf_vah.columns = dictionary
-tfidf_vah = tfidf_teh.assign(Headline=val['Headline'].drop_duplicates().tolist())
+tfidf_vah = tfidf_vah.assign(Headline=val['Headline'].drop_duplicates().tolist())
 tfidf_vah.to_csv('nlp_csv2/tfidf_val_head.csv', index=False)
 
 print('starting to add cos similarity')
