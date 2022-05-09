@@ -35,15 +35,18 @@ all = all_bodies.merge(all_stances, on='Body ID')
 
 # create a train test and validation set ratio 3:1:1
 
-# Creating a dataframe with 75%
+# Creating a dataframe with 60%
 # values of original dataframe
-train = all.sample(frac = 0.6)
+# train = all.sample(frac = 0.6)
+train = all.groupby('Stance', group_keys=False).apply(lambda x: x.sample(frac=0.6))
 
 # Creating dataframe with
 # rest of the 25% values
 val = all.drop(train.index)
 
-test = val.sample(frac = 0.5)
+# test = val.sample(frac = 0.5)
+test = val.groupby('Stance', group_keys=False).apply(lambda x: x.sample(frac=0.6))
+
 val = val.drop(test.index)
 
 train['articleBody'] = train['articleBody'].str.lower()
