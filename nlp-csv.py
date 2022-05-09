@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import string
 import json
 from sklearn.feature_extraction.text import TfidfVectorizer
+from scipy import spatial
+
 
 np.random.seed(42)
 # import nltk
@@ -183,12 +185,12 @@ print('starting to add cos similarity')
 # read in the csv files - avoids sparse error and alligns with
 # Google Colab version
 # # reading back in to see if it fixes sparsearray
-# tfidf_train_body = pd.read_csv('/content/drive/MyDrive/nlp_csv/tfidf_train_body.csv')
-# tfidf_train_head = pd.read_csv('/content/drive/MyDrive/nlp_csv/tfidf_train_head.csv')
-# tfidf_test_body = pd.read_csv('/content/drive/MyDrive/nlp_csv/tfidf_test_body.csv')
-# tfidf_test_head = pd.read_csv('/content/drive/MyDrive/nlp_csv/tfidf_test_head.csv')
-# tfidf_val_body = pd.read_csv('/content/drive/MyDrive/nlp_csv/tfidf_val_body.csv')
-# tfidf_val_head = pd.read_csv('/content/drive/MyDrive/nlp_csv/tfidf_val_head.csv')
+tfidf_tb = pd.read_csv('nlp_csv2/tfidf_train_body.csv')
+tfidf_th = pd.read_csv('nlp_csv2/tfidf_train_head.csv')
+tfidf_teb = pd.read_csv('nlp_csv2/tfidf_test_body.csv')
+tfidf_teh = pd.read_csv('nlp_csv2/tfidf_test_head.csv')
+tfidf_vab = pd.read_csv('nlp_csv2/tfidf_val_body.csv')
+tfidf_vah = pd.read_csv('nlp_csv2/tfidf_val_head.csv')
 
 tfidf_train = train.merge(tfidf_tb, how='inner', on='articleBody')
 tfidf_train = tfidf_train.merge(tfidf_th, how='inner', on='Headline')
