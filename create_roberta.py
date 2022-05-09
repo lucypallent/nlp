@@ -11,10 +11,10 @@ train = pd.read_csv('nlp_csv2/train.csv')
 test = pd.read_csv('nlp_csv2/test.csv')
 val = pd.read_csv('nlp_csv2/val.csv')
 
-# tra_articleBody = train['articleBody'].tolist()
-# tra_headline = train['Headline'].tolist()
-# tes_articleBody = test['articleBody'].tolist()
-# tes_headline = test['Headline'].tolist()
+tra_articleBody = train['articleBody'].tolist()
+tra_headline = train['Headline'].tolist()
+tes_articleBody = test['articleBody'].tolist()
+tes_headline = test['Headline'].tolist()
 val_articleBody = val['articleBody'].tolist()
 val_headline = val['Headline'].tolist()
 
@@ -43,21 +43,21 @@ def create_embed(sentences):
     sentence_embeddings = F.normalize(sentence_embeddings, p=2, dim=1)
     return sentence_embeddings
 
-# train['rob_articleBody'] = create_embed(tra_articleBody)
-# train['rob_Headline'] = create_embed(tra_headline)
-# test['rob_articleBody'] = create_embed(tes_articleBody)
-# test['rob_Headline'] = create_embed(tes_headline)
+train['rob_articleBody'] = create_embed(tra_articleBody)
+train['rob_Headline'] = create_embed(tra_headline)
+test['rob_articleBody'] = create_embed(tes_articleBody)
+test['rob_Headline'] = create_embed(tes_headline)
 val['rob_articleBody'] = create_embed(val_articleBody)
 val['rob_Headline'] = create_embed(val_headline)
 
 # caculate the cosine similarity between the two
-# train['rob_cos'] = train.apply(lambda row: scipy.spatial.distance.cosine(row['rob_articleBody'], row['rob_Headline']), axis = 1)
-# test['rob_cos'] = test.apply(lambda row: scipy.spatial.distance.cosine(row['rob_articleBody'], row['rob_Headline']), axis = 1)
+train['rob_cos'] = train.apply(lambda row: scipy.spatial.distance.cosine(row['rob_articleBody'], row['rob_Headline']), axis = 1)
+test['rob_cos'] = test.apply(lambda row: scipy.spatial.distance.cosine(row['rob_articleBody'], row['rob_Headline']), axis = 1)
 val['rob_cos'] = val.apply(lambda row: scipy.spatial.distance.cosine(row['rob_articleBody'], row['rob_Headline']), axis = 1)
 
 # save the dataframes
-# train.to_csv('nlp_csv2/rob_train.csv', index=False)
-# test.to_csv('nlp_csv2/rob_test.csv', index=False)
+train.to_csv('nlp_csv2/rob_train.csv', index=False)
+test.to_csv('nlp_csv2/rob_test.csv', index=False)
 val.to_csv('nlp_csv2/rob_val.csv', index=False)
 
 print('WORKS!')
