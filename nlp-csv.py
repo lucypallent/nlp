@@ -137,42 +137,42 @@ tfidf_train_body = tfidf_vectorizer.transform(train['articleBody'].drop_duplicat
 tfidf_tb = pd.DataFrame.sparse.from_spmatrix(tfidf_train_body)
 tfidf_tb.columns = dictionary
 tfidf_tb = tfidf_tb.assign(articleBody=train['articleBody'].drop_duplicates().tolist())
-tfidf_tb.to_csv('nlp_csv/tfidf_train_body.csv', index=False)
+tfidf_tb.to_csv('nlp_csv2/tfidf_train_body.csv', index=False)
 
 print('tfidf_train_headlines')
 tfidf_train_head = tfidf_vectorizer.transform(train['Headline'].drop_duplicates().values.astype('U'))
 tfidf_th = pd.DataFrame.sparse.from_spmatrix(tfidf_train_head)
 tfidf_th.columns = dictionary
 tfidf_th = tfidf_th.assign(Headline=train['Headline'].drop_duplicates().tolist())
-tfidf_th.to_csv('nlp_csv/tfidf_train_head.csv', index=False)
+tfidf_th.to_csv('nlp_csv2/tfidf_train_head.csv', index=False)
 
 print('tfidf_test_body')
 tfidf_test_body = tfidf_vectorizer.transform(test['articleBody'].drop_duplicates().values.astype('U'))
 tfidf_teb = pd.DataFrame.sparse.from_spmatrix(tfidf_test_body)
 tfidf_teb.columns = dictionary
 tfidf_teb = tfidf_teb.assign(articleBody=test['articleBody'].drop_duplicates().tolist())
-tfidf_teb.to_csv('nlp_csv/tfidf_test_body.csv', index=False)
+tfidf_teb.to_csv('nlp_csv2/tfidf_test_body.csv', index=False)
 
 print('tfidf_test_head')
 tfidf_test_head = tfidf_vectorizer.transform(test['Headline'].drop_duplicates().values.astype('U'))
 tfidf_teh = pd.DataFrame.sparse.from_spmatrix(tfidf_test_head)
 tfidf_teh.columns = dictionary
 tfidf_teh = tfidf_teh.assign(Headline=test['Headline'].drop_duplicates().tolist())
-tfidf_teh.to_csv('nlp_csv/tfidf_test_head.csv', index=False)
+tfidf_teh.to_csv('nlp_csv2/tfidf_test_head.csv', index=False)
 
 print('tfidf_val_body')
 tfidf_val_body = tfidf_vectorizer.transform(val['articleBody'].drop_duplicates().values.astype('U'))
 tfidf_vab = pd.DataFrame.sparse.from_spmatrix(tfidf_val_body)
 tfidf_vab.columns = dictionary
 tfidf_vab = tfidf_teb.assign(articleBody=val['articleBody'].drop_duplicates().tolist())
-tfidf_vab.to_csv('nlp_csv/tfidf_val_body.csv', index=False)
+tfidf_vab.to_csv('nlp_csv2/tfidf_val_body.csv', index=False)
 
 print('tfidf_val_head')
 tfidf_val_head = tfidf_vectorizer.transform(val['Headline'].drop_duplicates().values.astype('U'))
 tfidf_vah = pd.DataFrame.sparse.from_spmatrix(tfidf_val_head)
 tfidf_vah.columns = dictionary
 tfidf_vah = tfidf_teh.assign(Headline=val['Headline'].drop_duplicates().tolist())
-tfidf_vah.to_csv('nlp_csv/tfidf_val_head.csv', index=False)
+tfidf_vah.to_csv('nlp_csv2/tfidf_val_head.csv', index=False)
 
 print('starting to add cos similarity')
 # read in the csv files - avoids sparse error and alligns with
@@ -204,8 +204,8 @@ tfidf_bo_cols = tfidf_val.columns.tolist()[3:5003] # same for all three because 
 tfidf_he_cols = tfidf_val.columns.tolist()[5003:]
 tfidf_val['tfidf_cos'] = tfidf_val.apply(lambda row: scipy.spatial.distance.cosine(row[tfidf_bo_cols], row[tfidf_he_cols]), axis = 1)
 
-tfidf_train.to_csv('nlp_csv/tfidf_train.csv', index=False)
-tfidf_test.to_csv('nlp_csv/tfidf_test.csv', index=False)
-tfidf_val.to_csv('nlp_csv/tfidf_val.csv', index=False)
+tfidf_train.to_csv('nlp_csv2/tfidf_train.csv', index=False)
+tfidf_test.to_csv('nlp_csv2/tfidf_test.csv', index=False)
+tfidf_val.to_csv('nlp_csv2/tfidf_val.csv', index=False)
 
 print('WORKS!')
