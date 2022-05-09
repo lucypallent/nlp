@@ -94,6 +94,11 @@ test['Headline'] = test['Headline'].apply(lambda x: ' '.join([word for word in x
 val['articleBody'] = val['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 val['Headline'] = val['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 
+# save to csv files
+train.to_csv('nlp_csv2/train.csv', index=False)
+test.to_csv('nlp_csv2/test.csv', index=False)
+val.to_csv('nlp_csv2/val.csv', index=False)
+
 TFIDF_VOCAB_SIZE = 5000 # lim_unigram
 
 STOP_WORDS = [
@@ -177,6 +182,7 @@ tfidf_vah.to_csv('nlp_csv2/tfidf_val_head.csv', index=False)
 print('starting to add cos similarity')
 # read in the csv files - avoids sparse error and alligns with
 # Google Colab version
+# # reading back in to see if it fixes sparsearray
 # tfidf_train_body = pd.read_csv('/content/drive/MyDrive/nlp_csv/tfidf_train_body.csv')
 # tfidf_train_head = pd.read_csv('/content/drive/MyDrive/nlp_csv/tfidf_train_head.csv')
 # tfidf_test_body = pd.read_csv('/content/drive/MyDrive/nlp_csv/tfidf_test_body.csv')
