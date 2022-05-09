@@ -133,10 +133,15 @@ STOP_WORDS = [
         ]
 
 ########################### NOT RUNNING DUE TO MEMORY ISSUES
+# tfidf_vectorizer = TfidfVectorizer(max_features = TFIDF_VOCAB_SIZE, stop_words = STOP_WORDS).\
+#         fit(np.concatenate((train['articleBody'].values.astype('U'), train['Headline'].values.astype('U'),
+#         test['articleBody'].values.astype('U'), test['Headline'].values.astype('U'),
+#         val['articleBody'].values.astype('U'), test['Headline'].values.astype('U')), axis=0))
+
+# only fitting on train features to avoid memory leakage
 tfidf_vectorizer = TfidfVectorizer(max_features = TFIDF_VOCAB_SIZE, stop_words = STOP_WORDS).\
-        fit(np.concatenate((train['articleBody'].values.astype('U'), train['Headline'].values.astype('U'),
-        test['articleBody'].values.astype('U'), test['Headline'].values.astype('U'),
-        val['articleBody'].values.astype('U'), test['Headline'].values.astype('U')), axis=0))
+        fit(np.concatenate((train['articleBody'].values.astype('U'), train['Headline'].values.astype('U')), axis=0))
+
 ##########################
 dictionary = np.asarray(tfidf_vectorizer.get_feature_names())
 
@@ -201,16 +206,16 @@ tfidf_val = val.merge(tfidf_vab, how='inner', on='articleBody')
 tfidf_val = tfidf_val.merge(tfidf_vah, how='inner', on='Headline')
 
 # working out cosine similarity
-tfidf_bo_cols = tfidf_test.columns.tolist()[3:5003] # same for all three because based on same dictionary
-tfidf_he_cols = tfidf_test.columns.tolist()[5003:]
+tfidf_bo_cols = tfidf_test.columns.tolist()[4:5004] # same for all three because based on same dictionary
+tfidf_he_cols = tfidf_test.columns.tolist()[5004:]
 tfidf_test['tfidf_cos'] = tfidf_test.apply(lambda row: scipy.spatial.distance.cosine(row[tfidf_bo_cols], row[tfidf_he_cols]), axis = 1)
 
-tfidf_bo_cols = tfidf_train.columns.tolist()[3:5003] # same for all three because based on same dictionary
-tfidf_he_cols = tfidf_train.columns.tolist()[5003:]
+tfidf_bo_cols = tfidf_train.columns.tolist()[4:5004] # same for all three because based on same dictionary
+tfidf_he_cols = tfidf_train.columns.tolist()[5004:]
 tfidf_train['tfidf_cos'] = tfidf_train.apply(lambda row: scipy.spatial.distance.cosine(row[tfidf_bo_cols], row[tfidf_he_cols]), axis = 1)
 
-tfidf_bo_cols = tfidf_val.columns.tolist()[3:5003] # same for all three because based on same dictionary
-tfidf_he_cols = tfidf_val.columns.tolist()[5003:]
+tfidf_bo_cols = tfidf_val.columns.tolist()[4:5004] # same for all three because based on same dictionary
+tfidf_he_cols = tfidf_val.columns.tolist()[5004:]
 tfidf_val['tfidf_cos'] = tfidf_val.apply(lambda row: scipy.spatial.distance.cosine(row[tfidf_bo_cols], row[tfidf_he_cols]), axis = 1)
 
 tfidf_train.to_csv('nlp_csv2/tfidf_train.csv', index=False)
