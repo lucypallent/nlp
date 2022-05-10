@@ -23,6 +23,9 @@ def create_cos_sim_column(df_pth, sv_pth):
 
     print('successfully merged')
 
+    print(type(val['rob_articleBody'][2]))
+    print(type(val['rob_headline'][2]))
+
     val['rob_cos'] = val.apply(lambda row: cosine_similarity(row['rob_articleBody'], row['rob_headline']), axis = 1)
 
     # val.to_csv('nlp_csv2/rob_val.csv', index=False)
