@@ -9,6 +9,7 @@ from scipy import spatial
 from scipy import sparse
 from sklearn.metrics.pairwise import cosine_similarity
 from ast import literal_eval
+import numpy as np
 
 def create_cos_sim_column(df_pth, sv_pth):
     # val = pd.read_csv('nlp_csv2/val.csv')
@@ -22,18 +23,24 @@ def create_cos_sim_column(df_pth, sv_pth):
 
     val = val.merge(unique[['headline', 'rob_headline']], how='inner', on='headline')
 
-    print('successfully merged')
-
-    print(type(val['rob_articleBody'][2]))
-    print(type(val['rob_headline'][2]))
+    # print('successfully merged')
+    #
+    # print(type(val['rob_articleBody'][2]))
+    # print(type(val['rob_headline'][2]))
 
     val.rob_articleBody = val.rob_articleBody.apply(literal_eval)
     val.rob_headline = val.rob_headline.apply(literal_eval)
 
-    print(type(val['rob_articleBody'][2]))
-    print(type(val['rob_headline'][2]))
+    # print(type(val['rob_headline'][2]))
+    # print(type(val['rob_articleBody'][2]))
 
-    val['rob_cos'] = val.apply(lambda row: cosine_similarity(row['rob_articleBody'], row['rob_headline']), axis = 1)
+    print(len(val['rob_headline'][2]))
+    print(len(val['rob_headline'][2]))
+
+
+
+
+    val['rob_cos'] = val.apply(lambda row: cosine_similarity(np.array(row['rob_articleBody']), np.array(row['rob_headline'])), axis = 0) # was 1 before
 
     # val.to_csv('nlp_csv2/rob_val.csv', index=False)
     val.to_csv(sv_pth, index=False)
