@@ -38,9 +38,9 @@ def create_cos_sim_column(df_pth, sv_pth):
     print(len(val['rob_headline'][2]))
 
 
+    print(val.columns)
 
-
-    val['rob_cos'] = val.apply(lambda row: cosine_similarity(np.array(row['rob_articleBody']), np.array(row['rob_headline'])), axis = 0) # was 1 before
+    val['rob_cos'] = val.apply(lambda row: cosine_similarity(np.array(row[4]), np.array(row[5])), axis = 0) # was 1 before
 
     # val.to_csv('nlp_csv2/rob_val.csv', index=False)
     val.to_csv(sv_pth, index=False)
