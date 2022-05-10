@@ -33,7 +33,15 @@ tes_headline_unique = create_unique_list(tes_headline)
 tes_articleBody_unique = create_unique_list(tes_articleBody)
 
 print('create unique')
+headline_unique = val_headline_unique + tra_headline_unique + tes_headline_unique
 
+articleBody_unique = val_articleBody_unique + tra_articleBody_unique + tes_articleBody_unique
+print('create large unique')
+
+df = pd.DataFrame(list(zip(headline_unique, articleBody_unique)), columns =['headline', 'articleBody'])
+
+df.to_csv('nlp_csv2/unique.csv', index=False)
+print('df saved')
 
 
 # for i in val_articleBody:
