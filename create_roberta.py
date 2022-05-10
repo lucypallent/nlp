@@ -37,6 +37,13 @@ def create_cos_sim_column(df_pth, sv_pth):
     print(len(val['rob_headline'][2]))
     print(len(val['rob_headline'][2]))
 
+    print(val.iloc[0, 0])
+    print(val.iloc[0, 1])
+    print(val.iloc[0, 2])
+    print(val.iloc[0, 3])
+    print(val.iloc[0, 4])
+    print(val.iloc[0, 5])
+
 
     print(val.columns)
 
