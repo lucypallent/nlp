@@ -40,7 +40,7 @@ def create_embed(sentences):
     return sparse.csr_matrix(sentence_embeddings)
 
 m = create_embed(uni_headline[:5])
-len_headline = math.ceil(len(uni_headline5) / 5)
+len_headline = math.ceil(len(uni_headline) / 5)
 for i in range(1, len_headline):
     m_tmp = create_embed(uni_headline[5*i:5*(i+1)])
     m = scipy.sparse.vstack((m, m_tmp))
