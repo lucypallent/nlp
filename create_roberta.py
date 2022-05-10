@@ -7,14 +7,14 @@ import pandas as pd
 import scipy
 from scipy import spatial
 
-train = pd.read_csv('nlp_csv2/train.csv')
-test = pd.read_csv('nlp_csv2/test.csv')
+# train = pd.read_csv('nlp_csv2/train.csv')
+# test = pd.read_csv('nlp_csv2/test.csv')
 val = pd.read_csv('nlp_csv2/val.csv')
 
-tra_articleBody = train['articleBody'].tolist()
-tra_headline = train['Headline'].tolist()
-tes_articleBody = test['articleBody'].tolist()
-tes_headline = test['Headline'].tolist()
+# tra_articleBody = train['articleBody'].tolist()
+# tra_headline = train['Headline'].tolist()
+# tes_articleBody = test['articleBody'].tolist()
+# tes_headline = test['Headline'].tolist()
 val_articleBody = val['articleBody'].tolist()
 val_headline = val['Headline'].tolist()
 
@@ -43,10 +43,10 @@ def create_embed(sentences):
     sentence_embeddings = F.normalize(sentence_embeddings, p=2, dim=1)
     return sentence_embeddings
 
-train['rob_articleBody'] = create_embed(tra_articleBody)
-train['rob_Headline'] = create_embed(tra_headline)
-test['rob_articleBody'] = create_embed(tes_articleBody)
-test['rob_Headline'] = create_embed(tes_headline)
+# train['rob_articleBody'] = create_embed(tra_articleBody)
+# train['rob_Headline'] = create_embed(tra_headline)
+# test['rob_articleBody'] = create_embed(tes_articleBody)
+# test['rob_Headline'] = create_embed(tes_headline)
 val['rob_articleBody'] = create_embed(val_articleBody)
 val['rob_Headline'] = create_embed(val_headline)
 
