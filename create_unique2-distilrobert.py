@@ -38,8 +38,8 @@ def create_embed(sentences):
     sentence_embeddings = F.normalize(sentence_embeddings, p=2, dim=1)
     return sparse.csr_matrix(sentence_embeddings)
 
-rob_uni_headline = create_embed(uni_headline)
-rob_uni_articleBody = create_embed(uni_articleBody)
+rob_uni_headline = create_embed(uni_headline[:5])
+rob_uni_articleBody = create_embed(uni_articleBody[:5])
 
 unique['rob_articleBody'] = rob_uni_headline
 unique['rob_headline'] = rob_uni_articleBody
