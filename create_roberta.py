@@ -18,6 +18,12 @@ val = pd.read_csv('nlp_csv2/val.csv')
 val_articleBody = val['articleBody'].tolist()
 val_headline = val['Headline'].tolist()
 
+val_headline_unique = []
+
+for i in val_headline:
+    if i not in val_headline_unique:
+        val_headline_unique.append(i)
+
 #Mean Pooling - Take attention mask into account for correct averaging
 def mean_pooling(model_output, attention_mask):
     token_embeddings = model_output[0] #First element of model_output contains all token embeddings
@@ -43,17 +49,20 @@ def create_embed(sentences):
     sentence_embeddings = F.normalize(sentence_embeddings, p=2, dim=1)
     return sentence_embeddings
 
+
+print(type(create_embed(val_headline_unique)))
+
 # train['rob_articleBody'] = create_embed(tra_articleBody)
 # train['rob_Headline'] = create_embed(tra_headline)
 # test['rob_articleBody'] = create_embed(tes_articleBody)
 # test['rob_Headline'] = create_embed(tes_headline)
-val['rob_articleBody'] = create_embed(val_articleBody)
-val['rob_Headline'] = create_embed(val_headline)
-
-# save the dataframes
-train.to_csv('nlp_csv2/rob_train.csv', index=False)
-test.to_csv('nlp_csv2/rob_test.csv', index=False)
-val.to_csv('nlp_csv2/rob_val.csv', index=False)
+# val['rob_articleBody'] = create_embed(val_articleBody)
+# val['rob_Headline'] = create_embed(val_headline)
+#
+# # save the dataframes
+# train.to_csv('nlp_csv2/rob_train.csv', index=False)
+# test.to_csv('nlp_csv2/rob_test.csv', index=False)
+# val.to_csv('nlp_csv2/rob_val.csv', index=False)
 
 
 # # caculate the cosine similarity between the two
