@@ -44,6 +44,7 @@ def create_cos_sim_column(df_pth, sv_pth):
     print(val.iloc[0, 4])
     print(val.iloc[0, 5])
 
+    val.to_csv(sv_pth, index=False)
 
     print(val.columns)
 
