@@ -12,6 +12,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 def create_cos_sim_column(df_pth, sv_pth):
     # val = pd.read_csv('nlp_csv2/val.csv')
     val = pd.read_csv(df_pth)
+    val.rename(columns = {'Headline':'headline'}, inplace = True)
+
     unique = pd.read_csv('nlp_csv2/unique.csv')
 
     # merge on articleBody
