@@ -45,7 +45,12 @@ for i in range(1, len_headline):
     m_tmp = create_embed(uni_headline[5*i:5*(i+1)])
     m = scipy.sparse.vstack((m, m_tmp))
 
-unique['rob_articleBody'] = m.todense()
+
+print(m.todense().shape)
+print(len(m.todense().tolist()))
+print(len(m.todense().tolist()[0]))
+
+unique['rob_articleBody'] = m.todense().tolist()
 # rob_uni_articleBody = create_embed(uni_articleBody[:5])
 m = create_embed(uni_articleBody[:5])
 len_articleBody = math.ceil(len(uni_articleBody) / 5)
@@ -53,7 +58,9 @@ for i in range(1, len_articleBody):
     m_tmp = create_embed(uni_articleBody[5*i:5*(i+1)])
     m = scipy.sparse.vstack((m, m_tmp))
 
-unique['rob_headline'] = m.todense()
+
+
+unique['rob_headline'] = m.todense().tolist()
 # m_new = scipy.sparse.vstack((m1, m2))
 
 
