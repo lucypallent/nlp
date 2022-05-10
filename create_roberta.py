@@ -7,8 +7,8 @@ import pandas as pd
 import scipy
 from scipy import spatial
 
-# train = pd.read_csv('nlp_csv2/train.csv')
-# test = pd.read_csv('nlp_csv2/test.csv')
+train = pd.read_csv('nlp_csv2/tfidf_train.csv')
+test = pd.read_csv('nlp_csv2/tfidf_test.csv')
 val = pd.read_csv('nlp_csv2/tfidf_val.csv')
 
 tra_articleBody = train['articleBody'].tolist()
@@ -68,12 +68,8 @@ rob_tra_articleBody_unique = create_embed(tra_articleBody_unique)
 rob_tes_headline_unique = create_embed(tes_headline_unique)
 rob_tes_articleBody_unique = create_embed(tes_articleBody_unique)
 
-# train['rob_articleBody'] = create_embed(tra_articleBody)
-# train['rob_Headline'] = create_embed(tra_headline)
-# test['rob_articleBody'] = create_embed(tes_articleBody)
-# test['rob_Headline'] = create_embed(tes_headline)
-# val['rob_articleBody'] = create_embed(val_articleBody)
-# val['rob_Headline'] = create_embed(val_headline)
+
+
 #
 # # save the dataframes
 # train.to_csv('nlp_csv2/rob_train.csv', index=False)
