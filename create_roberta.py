@@ -8,6 +8,7 @@ import scipy
 from scipy import spatial
 from scipy import sparse
 from sklearn.metrics.pairwise import cosine_similarity
+from ast import literal_eval
 
 def create_cos_sim_column(df_pth, sv_pth):
     # val = pd.read_csv('nlp_csv2/val.csv')
@@ -22,6 +23,12 @@ def create_cos_sim_column(df_pth, sv_pth):
     val = val.merge(unique[['headline', 'rob_headline']], how='inner', on='headline')
 
     print('successfully merged')
+
+    print(type(val['rob_articleBody'][2]))
+    print(type(val['rob_headline'][2]))
+
+    val.rob_articleBody = val.rob_articleBody.apply(literal_eval)
+    val.rob_headline = val.rob_headline.apply(literal_eval)
 
     print(type(val['rob_articleBody'][2]))
     print(type(val['rob_headline'][2]))
