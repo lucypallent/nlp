@@ -5,6 +5,7 @@ import torch
 import torch.nn.functional as F
 import pandas as pd
 import scipy
+from scipy import sparse
 from scipy import spatial
 
 unique = pd.read_csv('nlp_csv2/unique.csv')
