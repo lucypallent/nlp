@@ -7,7 +7,7 @@ import pandas as pd
 import scipy
 from scipy import spatial
 from scipy import sparse
-from sklearn.metrics.pariwise import cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity
 
 def create_cos_sim_column(df_pth, sv_pth):
     # val = pd.read_csv('nlp_csv2/val.csv')
