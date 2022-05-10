@@ -50,14 +50,20 @@ test['rob_Headline'] = create_embed(tes_headline)
 val['rob_articleBody'] = create_embed(val_articleBody)
 val['rob_Headline'] = create_embed(val_headline)
 
-# caculate the cosine similarity between the two
-train['rob_cos'] = train.apply(lambda row: scipy.spatial.distance.cosine(row['rob_articleBody'], row['rob_Headline']), axis = 1)
-test['rob_cos'] = test.apply(lambda row: scipy.spatial.distance.cosine(row['rob_articleBody'], row['rob_Headline']), axis = 1)
-val['rob_cos'] = val.apply(lambda row: scipy.spatial.distance.cosine(row['rob_articleBody'], row['rob_Headline']), axis = 1)
-
 # save the dataframes
 train.to_csv('nlp_csv2/rob_train.csv', index=False)
 test.to_csv('nlp_csv2/rob_test.csv', index=False)
 val.to_csv('nlp_csv2/rob_val.csv', index=False)
+
+
+# # caculate the cosine similarity between the two
+# train['rob_cos'] = train.apply(lambda row: scipy.spatial.distance.cosine(row['rob_articleBody'], row['rob_Headline']), axis = 1)
+# test['rob_cos'] = test.apply(lambda row: scipy.spatial.distance.cosine(row['rob_articleBody'], row['rob_Headline']), axis = 1)
+# val['rob_cos'] = val.apply(lambda row: scipy.spatial.distance.cosine(row['rob_articleBody'], row['rob_Headline']), axis = 1)
+#
+# # save the dataframes
+# train.to_csv('nlp_csv2/rob_train.csv', index=False)
+# test.to_csv('nlp_csv2/rob_test.csv', index=False)
+# val.to_csv('nlp_csv2/rob_val.csv', index=False)
 
 print('WORKS!')
