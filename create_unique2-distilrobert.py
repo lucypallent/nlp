@@ -7,6 +7,7 @@ import pandas as pd
 import scipy
 from scipy import sparse
 from scipy import spatial
+import math
 
 unique = pd.read_csv('nlp_csv2/unique.csv')
 
