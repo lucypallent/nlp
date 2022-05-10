@@ -38,11 +38,26 @@ def create_embed(sentences):
     sentence_embeddings = F.normalize(sentence_embeddings, p=2, dim=1)
     return sparse.csr_matrix(sentence_embeddings)
 
-rob_uni_headline = create_embed(uni_headline[:5])
-rob_uni_articleBody = create_embed(uni_articleBody[:5])
+m = create_embed(uni_headline[:5])
+len_headline = len(uni_headline / 5)
+for i in range(1, len_headline):
+    m_tmp = create_embed(uni_headline[5*i:5*(i+1)])
+    m = scipy.sparse.vstack((m, m_tmp))
 
-unique['rob_articleBody'] = rob_uni_headline
-unique['rob_headline'] = rob_uni_articleBody
+unique['rob_articleBody'] = m
+# rob_uni_articleBody = create_embed(uni_articleBody[:5])
+m = create_embed(uni_articleBody[:5])
+len_articleBody = len(uni_articleBody / 5)
+for i in range(1, len_articleBody):
+    m_tmp = create_embed(uni_articleBody[5*i:5*(i+1)])
+    m = scipy.sparse.vstack((m, m_tmp))
+
+unique['rob_headline'] = m
+# m_new = scipy.sparse.vstack((m1, m2))
+
+
+# unique['rob_articleBody'] = rob_uni_headline
+# unique['rob_headline'] = rob_uni_articleBody
 
 print('updated unique dataframe')
 
