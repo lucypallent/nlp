@@ -39,7 +39,7 @@ def create_embed(sentences):
     return sparse.csr_matrix(sentence_embeddings)
 
 m = create_embed(uni_headline[:5])
-len_headline = len(uni_headline / 5)
+len_headline = math.ceil(len(uni_headline5) / 5)
 for i in range(1, len_headline):
     m_tmp = create_embed(uni_headline[5*i:5*(i+1)])
     m = scipy.sparse.vstack((m, m_tmp))
@@ -47,7 +47,7 @@ for i in range(1, len_headline):
 unique['rob_articleBody'] = m
 # rob_uni_articleBody = create_embed(uni_articleBody[:5])
 m = create_embed(uni_articleBody[:5])
-len_articleBody = len(uni_articleBody / 5)
+len_articleBody = math.ceil(len(uni_articleBody) / 5)
 for i in range(1, len_articleBody):
     m_tmp = create_embed(uni_articleBody[5*i:5*(i+1)])
     m = scipy.sparse.vstack((m, m_tmp))
