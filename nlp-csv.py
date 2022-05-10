@@ -38,22 +38,22 @@ all = all_bodies.merge(all_stances, on='Body ID')
 # Creating a dataframe with 60%
 # values of original dataframe
 # train = all.sample(frac = 0.6)
-train = all.groupby('Stance', group_keys=False).apply(lambda x: x.sample(frac=0.6))
+train = all.groupby('Stance', group_keys=False).apply(lambda x: x.sample(frac=0.8))
 
 # Creating dataframe with
 # rest of the 25% values
 val = all.drop(train.index)
 
-# test = val.sample(frac = 0.5)
-test = val.groupby('Stance', group_keys=False).apply(lambda x: x.sample(frac=0.6))
-
-val = val.drop(test.index)
+# # test = val.sample(frac = 0.5)
+# test = val.groupby('Stance', group_keys=False).apply(lambda x: x.sample(frac=0.6))
+#
+# val = val.drop(test.index)
 
 train['articleBody'] = train['articleBody'].str.lower()
 train['Headline'] = train['Headline'].str.lower()
 
-test['articleBody'] = test['articleBody'].str.lower()
-test['Headline'] = test['Headline'].str.lower()
+# test['articleBody'] = test['articleBody'].str.lower()
+# test['Headline'] = test['Headline'].str.lower()
 
 val['articleBody'] = val['articleBody'].str.lower()
 val['Headline'] = val['Headline'].str.lower()
@@ -68,8 +68,8 @@ stop = set(stop)
 train['articleBody'] = train['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 train['Headline'] = train['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 
-test['articleBody'] = test['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
-test['Headline'] = test['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+# test['articleBody'] = test['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+# test['Headline'] = test['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 
 val['articleBody'] = val['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 val['Headline'] = val['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
@@ -85,8 +85,8 @@ print(remove_punct(example))
 train['articleBody'] = train['articleBody'].apply(lambda x: remove_punct(x))
 train['Headline'] = train['Headline'].apply(lambda x: remove_punct(x))
 
-test['articleBody'] = test['articleBody'].apply(lambda x: remove_punct(x))
-test['Headline'] = test['Headline'].apply(lambda x: remove_punct(x))
+# test['articleBody'] = test['articleBody'].apply(lambda x: remove_punct(x))
+# test['Headline'] = test['Headline'].apply(lambda x: remove_punct(x))
 
 val['articleBody'] = val['articleBody'].apply(lambda x: remove_punct(x))
 val['Headline'] = val['Headline'].apply(lambda x: remove_punct(x))
@@ -94,15 +94,15 @@ val['Headline'] = val['Headline'].apply(lambda x: remove_punct(x))
 train['articleBody'] = train['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 train['Headline'] = train['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 
-test['articleBody'] = test['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
-test['Headline'] = test['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+# test['articleBody'] = test['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+# test['Headline'] = test['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 
 val['articleBody'] = val['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 val['Headline'] = val['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 
 # save to csv files
 train.to_csv('nlp_csv2/train.csv', index=False)
-test.to_csv('nlp_csv2/test.csv', index=False)
+# test.to_csv('nlp_csv2/test.csv', index=False)
 val.to_csv('nlp_csv2/val.csv', index=False)
 
 TFIDF_VOCAB_SIZE = 5000 # lim_unigram
@@ -162,19 +162,19 @@ tfidf_th.columns = dictionary
 tfidf_th = tfidf_th.assign(Headline=train['Headline'].drop_duplicates().tolist())
 tfidf_th.to_csv('nlp_csv2/tfidf_train_head.csv', index=False)
 
-print('tfidf_test_body')
-tfidf_test_body = tfidf_vectorizer.transform(test['articleBody'].drop_duplicates().values.astype('U'))
-tfidf_teb = pd.DataFrame.sparse.from_spmatrix(tfidf_test_body)
-tfidf_teb.columns = dictionary
-tfidf_teb = tfidf_teb.assign(articleBody=test['articleBody'].drop_duplicates().tolist())
-tfidf_teb.to_csv('nlp_csv2/tfidf_test_body.csv', index=False)
-
-print('tfidf_test_head')
-tfidf_test_head = tfidf_vectorizer.transform(test['Headline'].drop_duplicates().values.astype('U'))
-tfidf_teh = pd.DataFrame.sparse.from_spmatrix(tfidf_test_head)
-tfidf_teh.columns = dictionary
-tfidf_teh = tfidf_teh.assign(Headline=test['Headline'].drop_duplicates().tolist())
-tfidf_teh.to_csv('nlp_csv2/tfidf_test_head.csv', index=False)
+# print('tfidf_test_body')
+# tfidf_test_body = tfidf_vectorizer.transform(test['articleBody'].drop_duplicates().values.astype('U'))
+# tfidf_teb = pd.DataFrame.sparse.from_spmatrix(tfidf_test_body)
+# tfidf_teb.columns = dictionary
+# tfidf_teb = tfidf_teb.assign(articleBody=test['articleBody'].drop_duplicates().tolist())
+# tfidf_teb.to_csv('nlp_csv2/tfidf_test_body.csv', index=False)
+#
+# print('tfidf_test_head')
+# tfidf_test_head = tfidf_vectorizer.transform(test['Headline'].drop_duplicates().values.astype('U'))
+# tfidf_teh = pd.DataFrame.sparse.from_spmatrix(tfidf_test_head)
+# tfidf_teh.columns = dictionary
+# tfidf_teh = tfidf_teh.assign(Headline=test['Headline'].drop_duplicates().tolist())
+# tfidf_teh.to_csv('nlp_csv2/tfidf_test_head.csv', index=False)
 
 print('tfidf_val_body')
 tfidf_val_body = tfidf_vectorizer.transform(val['articleBody'].drop_duplicates().values.astype('U'))
@@ -196,22 +196,22 @@ print('starting to add cos similarity')
 # # reading back in to see if it fixes sparsearray
 tfidf_tb = pd.read_csv('nlp_csv2/tfidf_train_body.csv')
 tfidf_th = pd.read_csv('nlp_csv2/tfidf_train_head.csv')
-tfidf_teb = pd.read_csv('nlp_csv2/tfidf_test_body.csv')
-tfidf_teh = pd.read_csv('nlp_csv2/tfidf_test_head.csv')
+# tfidf_teb = pd.read_csv('nlp_csv2/tfidf_test_body.csv')
+# tfidf_teh = pd.read_csv('nlp_csv2/tfidf_test_head.csv')
 tfidf_vab = pd.read_csv('nlp_csv2/tfidf_val_body.csv')
 tfidf_vah = pd.read_csv('nlp_csv2/tfidf_val_head.csv')
 
 tfidf_train = train.merge(tfidf_tb, how='inner', on='articleBody')
 tfidf_train = tfidf_train.merge(tfidf_th, how='inner', on='Headline')
-tfidf_test = test.merge(tfidf_teb, how='inner', on='articleBody')
-tfidf_test = tfidf_test.merge(tfidf_teh, how='inner', on='Headline')
+# tfidf_test = test.merge(tfidf_teb, how='inner', on='articleBody')
+# tfidf_test = tfidf_test.merge(tfidf_teh, how='inner', on='Headline')
 tfidf_val = val.merge(tfidf_vab, how='inner', on='articleBody')
 tfidf_val = tfidf_val.merge(tfidf_vah, how='inner', on='Headline')
 
-# working out cosine similarity
-tfidf_bo_cols = tfidf_test.columns.tolist()[4:5004] # same for all three because based on same dictionary
-tfidf_he_cols = tfidf_test.columns.tolist()[5004:]
-tfidf_test['tfidf_cos'] = tfidf_test.apply(lambda row: scipy.spatial.distance.cosine(row[tfidf_bo_cols], row[tfidf_he_cols]), axis = 1)
+# # working out cosine similarity
+# tfidf_bo_cols = tfidf_test.columns.tolist()[4:5004] # same for all three because based on same dictionary
+# tfidf_he_cols = tfidf_test.columns.tolist()[5004:]
+# tfidf_test['tfidf_cos'] = tfidf_test.apply(lambda row: scipy.spatial.distance.cosine(row[tfidf_bo_cols], row[tfidf_he_cols]), axis = 1)
 
 tfidf_bo_cols = tfidf_train.columns.tolist()[4:5004] # same for all three because based on same dictionary
 tfidf_he_cols = tfidf_train.columns.tolist()[5004:]
@@ -222,7 +222,7 @@ tfidf_he_cols = tfidf_val.columns.tolist()[5004:]
 tfidf_val['tfidf_cos'] = tfidf_val.apply(lambda row: scipy.spatial.distance.cosine(row[tfidf_bo_cols], row[tfidf_he_cols]), axis = 1)
 
 tfidf_train.to_csv('nlp_csv2/tfidf_train.csv', index=False)
-tfidf_test.to_csv('nlp_csv2/tfidf_test.csv', index=False)
+# tfidf_test.to_csv('nlp_csv2/tfidf_test.csv', index=False)
 tfidf_val.to_csv('nlp_csv2/tfidf_val.csv', index=False)
 
 print('WORKS!')
