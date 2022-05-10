@@ -9,7 +9,7 @@ from scipy import spatial
 
 # train = pd.read_csv('nlp_csv2/train.csv')
 # test = pd.read_csv('nlp_csv2/test.csv')
-val = pd.read_csv('nlp_csv2/val.csv')
+val = pd.read_csv('nlp_csv2/tfidf_val.csv')
 
 # tra_articleBody = train['articleBody'].tolist()
 # tra_headline = train['Headline'].tolist()
@@ -19,10 +19,15 @@ val_articleBody = val['articleBody'].tolist()
 val_headline = val['Headline'].tolist()
 
 val_headline_unique = []
+val_articleBody_unique = []
 
 for i in val_headline:
     if i not in val_headline_unique:
         val_headline_unique.append(i)
+
+for i in val_articleBody:
+    if i not in val_articleBody_unique:
+        val_articleBody_unique.append(i)
 
 #Mean Pooling - Take attention mask into account for correct averaging
 def mean_pooling(model_output, attention_mask):
@@ -50,7 +55,9 @@ def create_embed(sentences):
     return sentence_embeddings
 
 
-print(type(create_embed(val_headline_unique)))
+rob_val_headline_unique = create_embed(val_headline_unique)
+rob_val_articleBody_unique = create_embed(val_articleBody_unique)
+
 
 # train['rob_articleBody'] = create_embed(tra_articleBody)
 # train['rob_Headline'] = create_embed(tra_headline)
