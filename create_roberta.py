@@ -32,6 +32,10 @@ tra_articleBody_unique = create_unique_list(tra_articleBody)
 tes_headline_unique = create_unique_list(tes_headline)
 tes_articleBody_unique = create_unique_list(tes_articleBody)
 
+print('create unique')
+
+
+
 # for i in val_articleBody:
 #     if i not in val_articleBody_unique:
 #         val_articleBody_unique.append(i)
