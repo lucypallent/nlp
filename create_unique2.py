@@ -35,7 +35,7 @@ def create_embed(sentences):
 
     # Normalize embeddings
     sentence_embeddings = F.normalize(sentence_embeddings, p=2, dim=1)
-    return sentence_embeddings
+    return sparse.csr_matrix(sentence_embeddings)
 
 rob_uni_headline = create_embed(uni_headline)
 rob_uni_articleBody = create_embed(uni_articleBody)
