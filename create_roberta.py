@@ -11,23 +11,30 @@ from scipy import spatial
 # test = pd.read_csv('nlp_csv2/test.csv')
 val = pd.read_csv('nlp_csv2/tfidf_val.csv')
 
-# tra_articleBody = train['articleBody'].tolist()
-# tra_headline = train['Headline'].tolist()
-# tes_articleBody = test['articleBody'].tolist()
-# tes_headline = test['Headline'].tolist()
+tra_articleBody = train['articleBody'].tolist()
+tra_headline = train['Headline'].tolist()
+tes_articleBody = test['articleBody'].tolist()
+tes_headline = test['Headline'].tolist()
 val_articleBody = val['articleBody'].tolist()
 val_headline = val['Headline'].tolist()
 
-val_headline_unique = []
-val_articleBody_unique = []
+def create_unique_list(original_list):
+    new_list = []
+    for i in original_list:
+        if i not in new_list:
+            new_list.append(i)
+    return new_list
 
-for i in val_headline:
-    if i not in val_headline_unique:
-        val_headline_unique.append(i)
+val_headline_unique = create_unique_list(val_headline)
+val_articleBody_unique = create_unique_list(val_articleBody)
+tra_headline_unique = create_unique_list(tra_headline)
+tra_articleBody_unique = create_unique_list(tra_articleBody)
+tes_headline_unique = create_unique_list(tes_headline)
+tes_articleBody_unique = create_unique_list(tes_articleBody)
 
-for i in val_articleBody:
-    if i not in val_articleBody_unique:
-        val_articleBody_unique.append(i)
+# for i in val_articleBody:
+#     if i not in val_articleBody_unique:
+#         val_articleBody_unique.append(i)
 
 #Mean Pooling - Take attention mask into account for correct averaging
 def mean_pooling(model_output, attention_mask):
@@ -54,10 +61,12 @@ def create_embed(sentences):
     sentence_embeddings = F.normalize(sentence_embeddings, p=2, dim=1)
     return sentence_embeddings
 
-
 rob_val_headline_unique = create_embed(val_headline_unique)
 rob_val_articleBody_unique = create_embed(val_articleBody_unique)
-
+rob_tra_headline_unique = create_embed(tra_headline_unique)
+rob_tra_articleBody_unique = create_embed(tra_articleBody_unique)
+rob_tes_headline_unique = create_embed(tes_headline_unique)
+rob_tes_articleBody_unique = create_embed(tes_articleBody_unique)
 
 # train['rob_articleBody'] = create_embed(tra_articleBody)
 # train['rob_Headline'] = create_embed(tra_headline)
