@@ -37,12 +37,12 @@ def create_cos_sim_column(df_pth, sv_pth):
     print(len(val['rob_headline'][2]))
     print(len(val['rob_headline'][2]))
 
-    print(val.iloc[0, 0])
-    print(val.iloc[0, 1])
-    print(val.iloc[0, 2])
-    print(val.iloc[0, 3])
-    print(val.iloc[0, 4])
-    print(val.iloc[0, 5])
+    print(val.iloc[-1, 0])
+    print(val.iloc[-1, 1])
+    print(val.iloc[-1, 2])
+    print(val.iloc[-1, 3])
+    print(val.iloc[-1, 4])
+    print(val.iloc[-1, 5])
 
     val.to_csv(sv_pth, index=False)
 
