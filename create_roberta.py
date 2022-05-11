@@ -19,7 +19,7 @@ def create_cos_sim_column(df_pth, sv_pth):
     # unique = pd.read_csv('nlp_csv2/unique.csv')
 
     headline_unique_df = pd.read_csv('nlp_csv2/headline_unique.csv')
-    articleBody_unique_df = prd.read_csv('nlp_csv2/articleBody_unique.csv')
+    articleBody_unique_df = pd.read_csv('nlp_csv2/articleBody_unique.csv')
 
     # merge on articleBody
     val = val.merge(articleBody_unique_df[['articleBody', 'rob_articleBody']], how='left', on='articleBody')
