@@ -49,6 +49,10 @@ print(Y_valid)
 print(len(Y_valid))
 print(Y_valid.shape)
 
+print(np.unique(best_preds))
+
+print(np.unique(best_preds, return_counts=True))
+
 print('results with original paramaters')
 print("Precision = {}".format(precision_score(Y_valid, best_preds, average='macro')))
 print("Recall = {}".format(recall_score(Y_valid, best_preds, average='macro')))
