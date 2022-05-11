@@ -21,7 +21,7 @@ from torchtext.data.functional import to_map_style_dataset
 # # tfidf.iloc[:,1].values #will be y
 # train_df.head()
 
-SAVE_DIR = 'checkpoints/2B-DL'
+SAVE_DIR = 'checkpoints/2B'
 
 train_df = pd.read_csv('nlp_csv2/tfidf_train.csv')
 valid_df = pd.read_csv('nlp_csv2/tfidf_val.csv')
