@@ -41,6 +41,8 @@ best_preds = np.asarray([int(np.round(np.argmax(line))) for line in preds])
 
 print(best_preds.dtype)
 print(Y_valid.dtype)
+print(valid_df.columns)
+Y_valid = Y_valid.astype(int)
 
 # print(preds)
 # print(len(preds))
@@ -89,9 +91,9 @@ preds2 = model2.predict(D_test)
 best_preds2 = np.asarray([np.argmax(line) for line in preds2])
 
 print('best preds')
-print("Precision = {}".format(precision_score(Y_test, best_preds2, average='macro')))
-print("Recall = {}".format(recall_score(Y_test, best_preds2, average='macro')))
-print("Accuracy = {}".format(accuracy_score(Y_test, best_preds2)))
+print("Precision = {}".format(precision_score(Y_valid, best_preds2, average='macro')))
+print("Recall = {}".format(recall_score(Y_valid, best_preds2, average='macro')))
+print("Accuracy = {}".format(accuracy_score(Y_valid, best_preds2)))
 
 # save the model_output
 print('saving model')
