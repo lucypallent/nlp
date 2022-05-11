@@ -40,8 +40,8 @@ headline_unique = val_headline_unique + tra_headline_unique #+ tes_headline_uniq
 articleBody_unique = val_articleBody_unique + tra_articleBody_unique #+ tes_articleBody_unique
 print('create large unique')
 
-headline_unique_df = pd.DataFrame(headline_unique, columns='headline')
-articleBody_unique_df = pd.DataFrame(articleBody_unique, columns='headline')
+headline_unique_df = pd.DataFrame(headline_unique, columns=['headline'])
+articleBody_unique_df = pd.DataFrame(articleBody_unique, columns=['headline'])
 
 # df = pd.DataFrame(list(zip(headline_unique, articleBody_unique)), columns =['headline', 'articleBody'])
 
