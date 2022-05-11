@@ -13,6 +13,9 @@ val = pd.read_csv('nlp_csv2/tfidf_val.csv')
 
 # train_body = pd.read_csv('nlp_csv2/tfidf_train_body.csv')
 
+print(train.columns)
+print(val.columns)
+
 tra_articleBody = train['articleBody'].tolist()
 tra_headline = train['Headline'].tolist()
 # tes_articleBody = test['articleBody'].tolist()
@@ -41,7 +44,7 @@ articleBody_unique = val_articleBody_unique + tra_articleBody_unique #+ tes_arti
 print('create large unique')
 
 headline_unique_df = pd.DataFrame(headline_unique, columns=['headline'])
-articleBody_unique_df = pd.DataFrame(articleBody_unique, columns=['headline'])
+articleBody_unique_df = pd.DataFrame(articleBody_unique, columns=['articleBody'])
 
 # df = pd.DataFrame(list(zip(headline_unique, articleBody_unique)), columns =['headline', 'articleBody'])
 
