@@ -4,6 +4,8 @@ from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
 from torch import nn
 import torch.nn.functional as F
+import os
+from os import join
 
 # di = {'unrelated': 0, 'discuss': 1, 'agree': 1, 'disagree': 1}
 # tfidf = pd.read_csv('/content/drive/MyDrive/tfidf_val_head.csv')
@@ -16,11 +18,13 @@ import torch.nn.functional as F
 # # tfidf.iloc[:,1].values #will be y
 # train_df.head()
 
+SAVE_DIR = 'checkpoints/2A-DL'
+
 train_df = pd.read_csv('nlp_csv2/tfidf_train.csv')
 valid_df = pd.read_csv('nlp_csv2/tfidf_val.csv')
 
-train_df.drop(['body ID', 'articleBody', 'Headline'], inplace=True)
-valid_df.drop(['body ID', 'articleBody', 'Headline'], inplace=True)
+train_df.drop(['Body ID', 'articleBody', 'Headline'], inplace=True)
+valid_df.drop(['Body ID', 'articleBody', 'Headline'], inplace=True)
 
 # NEED TO look at how tdidf is definied to get values for below
 # based on https://shashikachamod4u.medium.com/excel-csv-to-pytorch-dataset-def496b6bcc1
@@ -199,3 +203,8 @@ for epoch in range(1, EPOCHS + 1):
                                            time.time() - epoch_start_time,
                                            accu_val))
     print('-' * 59)
+
+# save the model_output
+print('saving model')
+torch.save(model.state_dict(), os.join(SAVE_DIR, 'tfidf-MLP.pth'))
+print('model saved')
