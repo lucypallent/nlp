@@ -50,10 +50,11 @@ def create_cos_sim_column(df_pth, sv_pth):
     #
     # print('\n \n \n \n END-------------------------------------------')
 
-
-    val.to_csv(sv_pth, index=False)
-
+    # val.to_csv(sv_pth, index=False)
+    print(val['rob_articleBody'].isnull().sum())
+    print(val['rob_headline'].isnull().sum())
     print(val.columns)
+
 
     val['rob_cos'] = val.apply(lambda row: cosine_similarity(np.array(row[4]).reshape(1, -1), np.array(row[5]).reshape(1, -1)), axis = 0) # was 1 before
 
