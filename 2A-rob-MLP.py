@@ -16,8 +16,8 @@ SAVE_DIR = 'checkpoints/2A-DL'
 train_df = pd.read_csv('nlp_csv2/rob_train.csv')
 valid_df = pd.read_csv('nlp_csv2/rob_val.csv')
 
-train_df.drop(['Body ID', 'articleBody', 'Headline'], axis=1, inplace=True)
-valid_df.drop(['Body ID', 'articleBody', 'Headline'], axis=1, inplace=True)
+train_df.drop(['Body ID', 'articleBody', 'headline'], axis=1, inplace=True)
+valid_df.drop(['Body ID', 'articleBody', 'headline'], axis=1, inplace=True)
 
 head_lst = list(range(768))
 head_lst = ['he_' + str(x) for x in head_lst]
