@@ -5,6 +5,9 @@ from torch.utils.data import Dataset
 from torch import nn
 import torch.nn.functional as F
 import os
+from torch.utils.data.dataset import random_split
+from torchtext.data.functional import to_map_style_dataset
+
 # from os import join
 
 # di = {'unrelated': 0, 'discuss': 1, 'agree': 1, 'disagree': 1}
@@ -156,8 +159,6 @@ target = torch.empty(3, dtype=torch.long).random_(5)
 output = loss(input, target)
 output.backward()
 
-from torch.utils.data.dataset import random_split
-from torchtext.data.functional import to_map_style_dataset
 # Hyperparameters
 EPOCHS = 90 # epoch
 LR = 0.01  # learning rate
