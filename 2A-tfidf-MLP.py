@@ -95,7 +95,7 @@ class TextClassificationModel(nn.Module): # based on team which came third but w
         return soft_x, x
 
 num_class = 2
-vocab_size = 5000
+vocab_size = 10001
 emsize = 64
 model = TextClassificationModel(vocab_size, num_class).to(device)
 
