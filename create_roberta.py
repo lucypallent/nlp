@@ -56,6 +56,13 @@ def create_cos_sim_column(df_pth, sv_pth):
     print(val.columns)
     print(val.dtypes)
 
+    print(val.iloc[:5, 0])
+    print(val.iloc[:5, 1])
+    print(val.iloc[:5, 2])
+    print(val.iloc[:5, 3])
+    print(val.iloc[:5, 4])
+    print(val.iloc[:5, 5])
+
     # val['rob_cos'] = val.apply(lambda row: cosine_similarity(np.array(row[4]).reshape(1, -1), np.array(row[5]).reshape(1, -1)), axis = 0) # was 1 before
 
     print(val.apply(lambda row: cosine_similarity(np.array(row[5]).reshape(1, -1), np.array(row[5]).reshape(1, -1)), axis = 0))
