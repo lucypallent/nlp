@@ -23,8 +23,8 @@ SAVE_DIR = 'checkpoints/2A-DL'
 train_df = pd.read_csv('nlp_csv2/tfidf_train.csv')
 valid_df = pd.read_csv('nlp_csv2/tfidf_val.csv')
 
-train_df.drop(['Body ID', 'articleBody', 'Headline'], inplace=True)
-valid_df.drop(['Body ID', 'articleBody', 'Headline'], inplace=True)
+train_df.drop(['Body ID', 'articleBody', 'Headline'], axis=1, inplace=True)
+valid_df.drop(['Body ID', 'articleBody', 'Headline'], axis=1, inplace=True)
 
 # NEED TO look at how tdidf is definied to get values for below
 # based on https://shashikachamod4u.medium.com/excel-csv-to-pytorch-dataset-def496b6bcc1
