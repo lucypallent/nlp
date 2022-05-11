@@ -37,21 +37,21 @@ steps = 20  # The number of training iterations
 model = xgb.train(param, D_train, steps)
 
 preds = model.predict(D_valid)
-best_preds = np.asarray([np.argmax(line) for line in preds])
+best_preds = np.asarray([int(np.round(np.argmax(line))) for line in preds])
 
-print(preds)
-print(len(preds))
-print(preds.shape)
-print(best_preds)
-print(len(best_preds))
-print(best_preds.shape)
-print(Y_valid)
-print(len(Y_valid))
-print(Y_valid.shape)
-
-print(np.unique(best_preds))
-
-print(np.unique(best_preds, return_counts=True))
+# print(preds)
+# print(len(preds))
+# print(preds.shape)
+# print(best_preds)
+# print(len(best_preds))
+# print(best_preds.shape)
+# print(Y_valid)
+# print(len(Y_valid))
+# print(Y_valid.shape)
+#
+# print(np.unique(best_preds))
+#
+# print(np.unique(best_preds, return_counts=True))
 
 print('results with original paramaters')
 print("Precision = {}".format(precision_score(Y_valid, best_preds, average='macro')))
