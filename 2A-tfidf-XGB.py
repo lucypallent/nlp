@@ -39,6 +39,9 @@ model = xgb.train(param, D_train, steps)
 preds = model.predict(D_valid)
 best_preds = np.asarray([np.argmax(line) for line in preds])
 
+print(best_preds)
+print(Y_valid)
+
 print('results with original paramaters')
 print("Precision = {}".format(precision_score(Y_valid, best_preds, average='macro')))
 print("Recall = {}".format(recall_score(Y_valid, best_preds, average='macro')))
