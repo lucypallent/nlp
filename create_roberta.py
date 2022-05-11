@@ -34,16 +34,16 @@ def create_cos_sim_column(df_pth, sv_pth):
     # print(type(val['rob_headline'][2]))
     # print(type(val['rob_articleBody'][2]))
     print('\n \n \n start of unique rob_articleBody')
-    print(unique['rob_articleBody'])
+    print(unique['rob_articleBody'].to_string())
 
     print('\n \n \n start of val rob_articleBody')
-    print(val['rob_articleBody'])
+    print(val['rob_articleBody'].to_string())
 
     print('\n \n \n start of unqiue rob_headline')
-    print(unique['rob_headline'])
+    print(unique['rob_headline'].to_string())
 
     print('\n \n \n start of val rob_headline')
-    print(val['rob_headline'])
+    print(val['rob_headline'].to_string())
 
     print('\n \n \n \n END-------------------------------------------')
 
