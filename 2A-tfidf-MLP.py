@@ -5,7 +5,7 @@ from torch.utils.data import Dataset
 from torch import nn
 import torch.nn.functional as F
 import os
-from os import join
+# from os import join
 
 # di = {'unrelated': 0, 'discuss': 1, 'agree': 1, 'disagree': 1}
 # tfidf = pd.read_csv('/content/drive/MyDrive/tfidf_val_head.csv')
@@ -206,5 +206,5 @@ for epoch in range(1, EPOCHS + 1):
 
 # save the model_output
 print('saving model')
-torch.save(model.state_dict(), os.join(SAVE_DIR, 'tfidf-MLP.pth'))
+torch.save(model.state_dict(), os.path.join(SAVE_DIR, 'tfidf-MLP.pth'))
 print('model saved')
