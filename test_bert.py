@@ -25,29 +25,29 @@ run = neptune.init(
 )  # your credentials
 #
 # # url_trb = 'https://raw.githubusercontent.com/FakeNewsChallenge/fnc-1/master/train_bodies.csv'
-# url_trb = 'nlp_csv/train_bodies.csv'
-# train_bodies = pd.read_csv(url_trb)
+url_trb = 'nlp_csv/train_bodies.csv'
+train_bodies = pd.read_csv(url_trb)
 #
 # # url_trs = 'https://raw.githubusercontent.com/FakeNewsChallenge/fnc-1/master/train_stances.csv'
-# url_trs = 'nlp_csv/train_stances.csv'
-# train_stances = pd.read_csv(url_trs)
+url_trs = 'nlp_csv/train_stances.csv'
+train_stances = pd.read_csv(url_trs)
 #
 # # url_teb = 'https://raw.githubusercontent.com/FakeNewsChallenge/fnc-1/master/test_bodies.csv'
-# url_teb = 'nlp_csv/test_bodies.csv'
-# test_bodies = pd.read_csv(url_teb)
+url_teb = 'nlp_csv/test_bodies.csv'
+test_bodies = pd.read_csv(url_teb)
 #
 # # url_tes = 'https://raw.githubusercontent.com/FakeNewsChallenge/fnc-1/master/test_stances_unlabeled.csv'
-# url_tes = 'nlp_csv/test_stances_unlabeled.csv'
-# test_stances = pd.read_csv(url_tes)
+url_tes = 'nlp_csv/test_stances_unlabeled.csv'
+test_stances = pd.read_csv(url_tes)
 #
-# train = train_bodies.merge(train_stances, on='Body ID')
-# test = test_bodies.merge(test_stances, on='Body ID')
-#
-# train['articleBody'] = train['articleBody'].str.lower()
-# train['Headline'] = train['Headline'].str.lower()
-#
-# test['articleBody'] = test['articleBody'].str.lower()
-# test['Headline'] = test['Headline'].str.lower()
+train = train_bodies.merge(train_stances, on='Body ID')
+test = test_bodies.merge(test_stances, on='Body ID')
+
+train['articleBody'] = train['articleBody'].str.lower()
+train['Headline'] = train['Headline'].str.lower()
+
+test['articleBody'] = test['articleBody'].str.lower()
+test['Headline'] = test['Headline'].str.lower()
 #
 #
 # #Now read the file back into a Python list object
@@ -71,19 +71,19 @@ run = neptune.init(
 # example = "I am #king"
 # print(remove_punct(example))
 #
-# train['articleBody'] = train['articleBody'].apply(lambda x: remove_punct(x))
-# train['Headline'] = train['Headline'].apply(lambda x: remove_punct(x))
-#
-# test['articleBody'] = test['articleBody'].apply(lambda x: remove_punct(x))
-# test['Headline'] = test['Headline'].apply(lambda x: remove_punct(x))
-#
-# train['articleBody'] = train['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
-# train['Headline'] = train['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
-#
-# test['articleBody'] = test['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
-# test['Headline'] = test['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
-#
-# all_words = pd.concat([test['articleBody'], test['Headline'], train['articleBody'], train['Headline']], axis=0, ignore_index=True).to_frame().rename(columns={0: 'Headline'})
+train['articleBody'] = train['articleBody'].apply(lambda x: remove_punct(x))
+train['Headline'] = train['Headline'].apply(lambda x: remove_punct(x))
+
+test['articleBody'] = test['articleBody'].apply(lambda x: remove_punct(x))
+test['Headline'] = test['Headline'].apply(lambda x: remove_punct(x))
+
+train['articleBody'] = train['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+train['Headline'] = train['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+
+test['articleBody'] = test['articleBody'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+test['Headline'] = test['Headline'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+
+all_words = pd.concat([test['articleBody'], test['Headline'], train['articleBody'], train['Headline']], axis=0, ignore_index=True).to_frame().rename(columns={0: 'Headline'})
 #
 # # bert transformer
 # # !pip install datasets
@@ -414,7 +414,7 @@ model, optimizer, train_dataloader, eval_dataloader, full_dataloader, mask_fille
 # # output = nlp(decoded_input)
 
 all_words['dbert_final'] = ''
-all_words['dbert_best'] = ''
+# all_words['dbert_best'] = ''
 all_words.drop_duplicates(inplace=True)
 
 for step, batch in enumerate(full_dataloader):
