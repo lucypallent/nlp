@@ -54,10 +54,11 @@ def create_cos_sim_column(df_pth, sv_pth):
     print(val['rob_articleBody'].isnull().sum())
     print(val['rob_headline'].isnull().sum())
     print(val.columns)
+    print(val.dtypes)
 
+    # val['rob_cos'] = val.apply(lambda row: cosine_similarity(np.array(row[4]).reshape(1, -1), np.array(row[5]).reshape(1, -1)), axis = 0) # was 1 before
 
-    val['rob_cos'] = val.apply(lambda row: cosine_similarity(np.array(row[4]).reshape(1, -1), np.array(row[5]).reshape(1, -1)), axis = 0) # was 1 before
-
+    print(val.apply(lambda row: cosine_similarity(np.array(row[5]).reshape(1, -1), np.array(row[5]).reshape(1, -1)), axis = 0))
     # used .reshape(1, -1) as using a single sample not a single feature
 
     # val.to_csv('nlp_csv2/rob_val.csv', index=False)
