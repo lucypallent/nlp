@@ -9,10 +9,13 @@ from scipy import sparse
 from scipy import spatial
 import math
 
-unique = pd.read_csv('nlp_csv2/unique.csv')
+# unique = pd.read_csv('nlp_csv2/unique.csv')
 
-uni_articleBody = unique['articleBody'].tolist()
-uni_headline = unique['headline'].tolist()
+headline_unique_df = pd.read_csv('nlp_csv2/headline_unique.csv')
+articleBody_unique_df = pd.read_csv('nlp_csv2/articleBody_unique.csv')
+
+uni_articleBody = articleBody_unique_df['articleBody'].tolist()
+uni_headline = headline_unique_df['headline'].tolist()
 
 #Mean Pooling - Take attention mask into account for correct averaging
 def mean_pooling(model_output, attention_mask):
@@ -50,7 +53,7 @@ print(m.todense().shape)
 print(len(m.todense().tolist()))
 print(len(m.todense().tolist()[0]))
 
-unique['rob_articleBody'] = m.todense().tolist()
+articleBody_unique_df['rob_articleBody'] = m.todense().tolist()
 # rob_uni_articleBody = create_embed(uni_articleBody[:5])
 m = create_embed(uni_articleBody[:5])
 len_articleBody = math.ceil(len(uni_articleBody) / 5)
@@ -60,7 +63,7 @@ for i in range(1, len_articleBody):
 
 
 
-unique['rob_headline'] = m.todense().tolist()
+headline_unique_df['rob_headline'] = m.todense().tolist()
 # m_new = scipy.sparse.vstack((m1, m2))
 
 
@@ -69,7 +72,9 @@ unique['rob_headline'] = m.todense().tolist()
 
 print('updated unique dataframe')
 
-unique.to_csv('nlp_csv2/unique.csv', index=False)
+# unique.to_csv('nlp_csv2/unique.csv', index=False)
+headline_unique_df.to_csv('nlp_csv2/headline_unique.csv', index=False)
+articleBody_unique_df.to_csv('nlp_csv2/articleBody_unique.csv', index=False)
 print('df saved')
 
 
