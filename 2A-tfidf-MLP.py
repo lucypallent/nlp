@@ -111,17 +111,18 @@ def train(dataloader):
     for idx, (label, text) in enumerate(dataloader):
         optimizer.zero_grad()
         # optimizer2.zero_grad()
-        # text = text.long()
+        text = text.to(device)
+        lable = label.to(device)
         predicted_label, unsoftmax_predicted_label = model(text.float())#, offsets)
         label # = torch.Tensor(label.float())
         # label = torch.reshape(label, (500, 1))
-        label2 = torch.zeros(500, 2)
-
-        for i, x in enumerate(label):
-            if x == 0:
-                label2[i] = torch.Tensor([1, 0])
-            else:
-                label2[i] = torch.Tensor([0, 1])
+        # label2 = torch.zeros(500, 2)
+        #
+        # for i, x in enumerate(label):
+        #     if x == 0:
+        #         label2[i] = torch.Tensor([1, 0])
+        #     else:
+        #         label2[i] = torch.Tensor([0, 1])
         # print(label2)
         loss = criterion(unsoftmax_predicted_label, label.long()) #* 0.00001 # * is the regularisation of l2
         loss.backward()
@@ -145,6 +146,8 @@ def evaluate(dataloader):
     with torch.no_grad():
         for idx, (label, text) in enumerate(dataloader): # (label, text, offsets)
             # text = text.long()
+            text = text.to(device)
+            label = label.to(device)
             predicted_label, unsoftmax_predicted_label = model(text.float())#, offsets)
 
             loss = criterion(unsoftmax_predicted_label, label.long()) * 0.00001 # use the unsoftmaxed with the loss function in orig
