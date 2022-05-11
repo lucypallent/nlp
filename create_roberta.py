@@ -16,12 +16,15 @@ def create_cos_sim_column(df_pth, sv_pth):
     val = pd.read_csv(df_pth)
     val.rename(columns = {'Headline':'headline'}, inplace = True)
 
-    unique = pd.read_csv('nlp_csv2/unique.csv')
+    # unique = pd.read_csv('nlp_csv2/unique.csv')
+
+    headline_unique_df = pd.read_csv('nlp_csv2/headline_unique.csv')
+    articleBody_unique_df = prd.read_csv('nlp_csv2/articleBody_unique.csv')
 
     # merge on articleBody
-    val = val.merge(unique[['articleBody', 'rob_articleBody']], how='inner', on='articleBody')
+    val = val.merge(articleBody_unique_df[['articleBody', 'rob_articleBody']], how='left', on='articleBody')
 
-    val = val.merge(unique[['headline', 'rob_headline']], how='inner', on='headline')
+    val = val.merge(headline_unique_df[['headline', 'rob_headline']], how='left', on='headline')
 
     # print('successfully merged')
     #
@@ -33,19 +36,19 @@ def create_cos_sim_column(df_pth, sv_pth):
 
     # print(type(val['rob_headline'][2]))
     # print(type(val['rob_articleBody'][2]))
-    print('\n \n \n start of unique rob_articleBody')
-    print(unique['rob_articleBody'].to_string())
-
-    print('\n \n \n start of val rob_articleBody')
-    print(val['rob_articleBody'].to_string())
-
-    print('\n \n \n start of unqiue rob_headline')
-    print(unique['rob_headline'].to_string())
-
-    print('\n \n \n start of val rob_headline')
-    print(val['rob_headline'].to_string())
-
-    print('\n \n \n \n END-------------------------------------------')
+    # print('\n \n \n start of unique rob_articleBody')
+    # print(unique['rob_articleBody'].to_string())
+    #
+    # print('\n \n \n start of val rob_articleBody')
+    # print(val['rob_articleBody'].to_string())
+    #
+    # print('\n \n \n start of unqiue rob_headline')
+    # print(unique['rob_headline'].to_string())
+    #
+    # print('\n \n \n start of val rob_headline')
+    # print(val['rob_headline'].to_string())
+    #
+    # print('\n \n \n \n END-------------------------------------------')
 
 
     val.to_csv(sv_pth, index=False)
