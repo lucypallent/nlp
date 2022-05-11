@@ -39,7 +39,7 @@ model = xgb.train(param, D_train, steps)
 preds = model.predict(D_valid)
 best_preds = np.asarray([int(np.round(np.argmax(line))) for line in preds])
 
-print(best_pred.dtype)
+print(best_preds.dtype)
 print(Y_valid.dtype)
 
 # print(preds)
