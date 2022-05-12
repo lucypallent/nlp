@@ -231,5 +231,5 @@ for epoch in range(1, EPOCHS + 1):
 
 # save the model_output
 print('saving model')
-torch.save(model.state_dict(), os.path.join(SAVE_DIR, 'rob-MLP.pth'))
+torch.save(model.state_dict(), os.path.join(SAVE_DIR, 'all-MLP.pth'))
 print('model saved')
