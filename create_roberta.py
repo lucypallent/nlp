@@ -1,5 +1,9 @@
 # based on: https://huggingface.co/sentence-transformers/all-roberta-large-v1
 
+# SEEEEE if test.py worked by looking at 184022
+# if it does then apply to MLP rob /
+
+
 from transformers import AutoTokenizer, AutoModel
 import torch
 import torch.nn.functional as F

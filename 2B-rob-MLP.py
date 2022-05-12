@@ -10,14 +10,36 @@ import torch.nn.functional as F
 import os
 from torch.utils.data.dataset import random_split
 from torchtext.data.functional import to_map_style_dataset
+from ast import literal_eval
 
 SAVE_DIR = 'checkpoints/2B'
 
 train_df = pd.read_csv('nlp_csv2/rob_train.csv')
 valid_df = pd.read_csv('nlp_csv2/rob_val.csv')
 
-train_df.drop(['Body ID', 'articleBody', 'Headline'], axis=1, inplace=True)
-valid_df.drop(['Body ID', 'articleBody', 'Headline'], axis=1, inplace=True)
+train_df.drop(['Body ID', 'articleBody', 'headline'], axis=1, inplace=True)
+valid_df.drop(['Body ID', 'articleBody', 'headline'], axis=1, inplace=True)
+
+train_df.rob_articleBody = train_df.rob_articleBody.apply(literal_eval)
+train_df.rob_headline = train_df.rob_headline.apply(literal_eval)
+
+valid_df.rob_articleBody = valid_df.rob_articleBody.apply(literal_eval)
+valid_df.rob_headline = valid_df.rob_headline.apply(literal_eval)
+
+train_art = train_df.rob_articleBody.apply(pd.Series)
+train_head = train_df.rob_headline.apply(pd.Series)
+
+val_art = valid_df.rob_articleBody.apply(pd.Series)
+val_head = valid_df.rob_headline.apply(pd.Series)
+
+train_df = train_df.join(train_art)
+train_df = train_df.join(train_head)
+train_df.drop(['rob_articleBody', 'rob_headline'], axis=1, inplace=True)
+
+valid_df = valid_df.join(val_art)
+valid_df = valid_df.join(val_head)
+valid_df.drop(['rob_articleBody', 'rob_headline'], axis=1, inplace=True)
+print(val.columns)
 
 # remove the 'unrelated' rows from the train_df and val_df
 train_df = train_df[train_df['Stance'] != 'unrelated']
