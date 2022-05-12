@@ -207,3 +207,26 @@ for epoch in range(1, EPOCHS + 1):
 print('saving model')
 torch.save(model.state_dict(), os.path.join(SAVE_DIR, 'tfidf-MLP.pth'))
 print('model saved')
+
+model.eval()
+total_acc, total_count = 0, 0
+
+all_pred = []
+all_label = []
+with torch.no_grad():
+    for idx, (label, text) in enumerate(valid_dataloader): # (label, text, offsets)
+        # text = text.long()
+        text = text.to(device)
+        label = label.to(device)
+        predicted_label, unsoftmax_predicted_label = model(text.float())#, offsets)
+
+        loss = criterion(unsoftmax_predicted_label, label.long()) * 0.00001 # use the unsoftmaxed with the loss function in orig
+        total_acc += (predicted_label.argmax(1) == label).sum().item()
+        total_count += label.size(0)
+        all_pred.append(predicted_label.argmax(1))
+        all_label.append(label)
+return total_acc/total_count
+
+from sklearn.metrics import confusion_matrix, classification_report
+print(confusion_matrix(all_label, all_pred))
+print(classification_report(all_label, all_pred, target_names = ['discuss', 'agree', 'disagree']))
