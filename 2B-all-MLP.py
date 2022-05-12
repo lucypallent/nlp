@@ -17,6 +17,9 @@ SAVE_DIR = 'checkpoints/2B'
 train_df = pd.read_csv('nlp_csv2/rob_train.csv')
 valid_df = pd.read_csv('nlp_csv2/rob_val.csv')
 
+train_df.drop('Body ID', axis=1, inplace=True)
+valid_df.drop('Body ID', axis=1, inplace=True)
+
 # train_df.drop(['Body ID', 'articleBody', 'headline'], axis=1, inplace=True)
 # valid_df.drop(['Body ID', 'articleBody', 'headline'], axis=1, inplace=True)
 
@@ -52,6 +55,9 @@ print(valid_df.columns)
 train_tfidf = pd.read_csv('nlp_csv2/tfidf_train.csv')
 valid_tfidf = pd.read_csv('nlp_csv2/tfidf_val.csv')
 
+train_tfidf.drop('Body ID', axis=1, inplace=True)
+valid_tfidf.drop('Body ID', axis=1, inplace=True)
+
 train_tfidf.rename(columns = {'Headline':'headline'}, inplace = True)
 valid_tfidf.rename(columns = {'Headline':'headline'}, inplace = True)
 
@@ -59,8 +65,14 @@ train_df = train_df.merge(train_tfidf, how='left', on=['articleBody', 'headline'
 
 valid_df = valid_df.merge(valid_tfidf, how='left', on=['articleBody', 'headline'])
 
-train_df.drop(['Body ID', 'articleBody', 'headline'], axis=1, inplace=True)
-valid_df.drop(['Body ID', 'articleBody', 'headline'], axis=1, inplace=True)
+print(train_df.columns)
+print(valid_df.columns)
+
+train_df.drop(['articleBody', 'headline'], axis=1, inplace=True)
+valid_df.drop(['articleBody', 'headline'], axis=1, inplace=True)
+
+print(train_df.columns)
+print(valid_df.columns)
 
 # remove the 'unrelated' rows from the train_df and val_df
 train_df = train_df[train_df['Stance'] != 'unrelated']
