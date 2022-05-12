@@ -41,6 +41,14 @@ valid_df = valid_df.join(val_head, lsuffix='art', rsuffix='head')
 valid_df.drop(['rob_articleBody', 'rob_headline'], axis=1, inplace=True)
 print(valid_df.columns)
 
+train_df.rob_cos = train_df.rob_cos.apply(literal_eval)
+train_df.rob_cos = train_df.rob_cos.apply(pd.Series)
+train_df.rob_cos = train_df.rob_cos.apply(pd.Series)
+
+valid_df.rob_cos = valid_df.rob_cos.apply(literal_eval)
+valid_df.rob_cos = valid_df.rob_cos.apply(pd.Series)
+valid_df.rob_cos = valid_df.rob_cos.apply(pd.Series)
+
 # NEED TO look at how tdidf is definied to get values for below
 # based on https://shashikachamod4u.medium.com/excel-csv-to-pytorch-dataset-def496b6bcc1
 class binaryDataset(Dataset):
