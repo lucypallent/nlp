@@ -56,10 +56,6 @@ Y_train = train_df.iloc[:,1].to_numpy()
 X_valid = valid_df.iloc[:,1:].to_numpy()
 Y_valid = valid_df.iloc[:,1].to_numpy()
 
-print(train_df['X_train'])
-
-print(train_df['Y_train'])
-
 D_train = xgb.DMatrix(X_train, label=Y_train)
 D_valid = xgb.DMatrix(X_valid, label=Y_valid)
 
