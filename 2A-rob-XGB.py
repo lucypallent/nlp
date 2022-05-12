@@ -28,6 +28,14 @@ train_head = train_df.rob_headline.apply(pd.Series)
 val_art = valid_df.rob_articleBody.apply(pd.Series)
 val_head = valid_df.rob_headline.apply(pd.Series)
 
+train_df.rob_cos = train_df.rob_cos.apply(literal_eval)
+train_df.rob_cos = train_df.rob_cos.apply(pd.Series)
+train_df.rob_cos = train_df.rob_cos.apply(pd.Series)
+
+valid_df.rob_cos = valid_df.rob_cos.apply(literal_eval)
+valid_df.rob_cos = valid_df.rob_cos.apply(pd.Series)
+valid_df.rob_cos = valid_df.rob_cos.apply(pd.Series)
+
 train_df = train_df.join(train_art)
 train_df = train_df.join(train_head, lsuffix='art', rsuffix='head')
 train_df.drop(['rob_articleBody', 'rob_headline'], axis=1, inplace=True)
