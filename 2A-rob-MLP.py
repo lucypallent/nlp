@@ -39,7 +39,7 @@ train_df.drop(['rob_articleBody', 'rob_headline'], axis=1, inplace=True)
 valid_df = valid_df.join(val_art)
 valid_df = valid_df.join(val_head, lsuffix='art', rsuffix='head')
 valid_df.drop(['rob_articleBody', 'rob_headline'], axis=1, inplace=True)
-print(val.columns)
+print(valid_df.columns)
 
 # NEED TO look at how tdidf is definied to get values for below
 # based on https://shashikachamod4u.medium.com/excel-csv-to-pytorch-dataset-def496b6bcc1

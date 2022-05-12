@@ -47,6 +47,9 @@ train_df = train_df.merge(train_tfidf, how='left', on=['articleBody', 'headline'
 
 valid_df = valid_df.merge(valid_tfidf, how='left', on=['articleBody', 'headline'])
 
+print(train_df.columns)
+print(valid_df.columns)
+
 train_df.drop(['Body ID', 'articleBody', 'headline'], axis=1, inplace=True)
 valid_df.drop(['Body ID', 'articleBody', 'headline'], axis=1, inplace=True)
 # NEED TO look at how tdidf is definied to get values for below

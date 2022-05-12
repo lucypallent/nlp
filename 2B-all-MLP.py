@@ -39,7 +39,7 @@ train_df.drop(['rob_articleBody', 'rob_headline'], axis=1, inplace=True)
 valid_df = valid_df.join(val_art)
 valid_df = valid_df.join(val_head, lsuffix='art', rsuffix='head')
 valid_df.drop(['rob_articleBody', 'rob_headline'], axis=1, inplace=True)
-print(val.columns)
+print(valid_df.columns)
 
 train_tfidf = pd.read_csv('nlp_csv2/tfidf_train.csv')
 valid_tfidf = pd.read_csv('nlp_csv2/tfidf_val.csv')
