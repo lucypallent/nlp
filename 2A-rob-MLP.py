@@ -10,6 +10,7 @@ import torch.nn.functional as F
 import os
 from torch.utils.data.dataset import random_split
 from torchtext.data.functional import to_map_style_dataset
+from ast import literal_eval
 
 SAVE_DIR = 'checkpoints/2A-DL'
 
@@ -19,24 +20,26 @@ valid_df = pd.read_csv('nlp_csv2/rob_val.csv')
 train_df.drop(['Body ID', 'articleBody', 'headline'], axis=1, inplace=True)
 valid_df.drop(['Body ID', 'articleBody', 'headline'], axis=1, inplace=True)
 
-head_lst = list(range(768))
-head_lst = ['he_' + str(x) for x in head_lst]
+train_df.rob_articleBody = train_df.rob_articleBody.apply(literal_eval)
+train_df.rob_headline = train_df.rob_headline.apply(literal_eval)
 
-art_lst = list(range(768))
-art_lst = ['art_' + str(x) for x in art_lst]
+valid_df.rob_articleBody = valid_df.rob_articleBody.apply(literal_eval)
+valid_df.rob_headline = valid_df.rob_headline.apply(literal_eval)
 
-split_train = pd.DataFrame(train_df['rob_articleBody'].tolist(), columns=art_lst)
-split_head = pd.DataFrame(train_df['rob_headline'].tolist(), columns=head_lst)
+train_art = train_df.rob_articleBody.apply(pd.Series)
+train_head = train_df.rob_headline.apply(pd.Series)
 
-train_df = pd.concat([train_df, split_train, split_head], axis=1)
+val_art = valid_df.rob_articleBody.apply(pd.Series)
+val_head = valid_df.rob_headline.apply(pd.Series)
+
+train_df = train_df.join(train_art)
+train_df = train_df.join(train_head)
 train_df.drop(['rob_articleBody', 'rob_headline'], axis=1, inplace=True)
 
-split_train = pd.DataFrame(valid_df['rob_articleBody'].tolist(), columns=art_lst)
-split_head = pd.DataFrame(valid_df['rob_headline'].tolist(), columns=head_lst)
-
-valid_df = pd.concat([valid_df, split_train, split_head], axis=1)
+valid_df = valid_df.join(val_art)
+valid_df = valid_df.join(val_head)
 valid_df.drop(['rob_articleBody', 'rob_headline'], axis=1, inplace=True)
-
+print(val.columns)
 
 # NEED TO look at how tdidf is definied to get values for below
 # based on https://shashikachamod4u.medium.com/excel-csv-to-pytorch-dataset-def496b6bcc1
