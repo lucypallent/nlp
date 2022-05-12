@@ -230,7 +230,6 @@ with torch.no_grad():
         total_count += label.size(0)
         all_pred.append(predicted_label.argmax(1))
         all_label.append(label)
-return total_acc/total_count
 
 from sklearn.metrics import confusion_matrix, classification_report
 print(confusion_matrix(all_label, all_pred))

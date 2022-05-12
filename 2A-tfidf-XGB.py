@@ -66,7 +66,7 @@ print("Accuracy = {}".format(accuracy_score(Y_valid, best_preds)))
 
 from sklearn.metrics import confusion_matrix, classification_report
 print(confusion_matrix(Y_valid, best_preds))
-print(classification_report(Y_valid, best_preds, target_names = ['unrelated', 'related']))
+print(classification_report(Y_valid, best_preds))
 
 
 
