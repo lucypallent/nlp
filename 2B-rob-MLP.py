@@ -37,7 +37,7 @@ train_df = train_df.join(train_head, lsuffix='art', rsuffix='head')
 train_df.drop(['rob_articleBody', 'rob_headline'], axis=1, inplace=True)
 
 valid_df = valid_df.join(val_art)
-valid_df = valid_df.join(val_head)
+valid_df = valid_df.join(val_head, lsuffix='art', rsuffix='head')
 valid_df.drop(['rob_articleBody', 'rob_headline'], axis=1, inplace=True)
 print(val.columns)
 
