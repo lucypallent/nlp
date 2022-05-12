@@ -33,7 +33,7 @@ val_art = valid_df.rob_articleBody.apply(pd.Series)
 val_head = valid_df.rob_headline.apply(pd.Series)
 
 train_df = train_df.join(train_art)
-train_df = train_df.join(train_head)
+train_df = train_df.join(train_head, lsuffix='art', rsuffix='head')
 train_df.drop(['rob_articleBody', 'rob_headline'], axis=1, inplace=True)
 
 valid_df = valid_df.join(val_art)
