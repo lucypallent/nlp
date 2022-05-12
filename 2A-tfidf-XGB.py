@@ -63,6 +63,15 @@ print("Precision = {}".format(precision_score(Y_valid, best_preds, average='macr
 print("Recall = {}".format(recall_score(Y_valid, best_preds, average='macro')))
 print("Accuracy = {}".format(accuracy_score(Y_valid, best_preds)))
 
+
+from sklearn.metrics import confusion_matrix, classification_report
+print(confusion_matrix(Y_valid, best_preds))
+print(classification_report(Y_valid, best_preds, target_names = ['unrelated', 'related']))
+
+
+
+
+
 # clf = xgb.XGBClassifier()
 # parameters = {
 #      "eta"    : [0.05, 0.10, 0.15, 0.20, 0.25, 0.30 ] ,
