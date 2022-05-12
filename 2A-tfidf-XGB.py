@@ -30,7 +30,7 @@ param = {
     'eta': 0.3,
     'max_depth': 3,
     'objective': 'multi:softprob',
-    'num_class': 3}
+    'num_class': 2}
 
 steps = 20  # The number of training iterations
 
